@@ -1,7 +1,3 @@
-import com.sun.imageio.plugins.bmp.BMPMetadata;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
