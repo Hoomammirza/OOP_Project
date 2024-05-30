@@ -1,3 +1,6 @@
+import UserManagement.User;
+import UserManagement.Users;
+
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -119,7 +122,7 @@ public class signup {
         String nickname=matcher.group("nickname");
         if(CorrectUserName(username))
         {
-            if(correctPassword(password) && !member.ExistUsername(username))
+            if(correctPassword(password) && !Users.ExistUsername(username))
             {
                 this.username=username;
                 this.password=password;
@@ -133,7 +136,7 @@ public class signup {
         String nickname=matcher.group("nickname");
         if(CorrectUserName(username))
         {
-            if(!member.ExistUsername(username))
+            if(!Users.ExistUsername(username))
             {
                 this.username=username;
                 String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789*!@#$%^&*";
