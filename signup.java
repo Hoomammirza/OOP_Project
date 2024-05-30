@@ -1,3 +1,5 @@
+import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -117,26 +119,62 @@ public class signup {
         String nickname=matcher.group("nickname");
         if(CorrectUserName(username))
         {
-            if(correctPassword(password))
+            if(correctPassword(password) && !member.ExistUsername(username))
             {
                 this.username=username;
                 this.password=password;
             }
         }
     }
-    public static void run()
+    private void createUserWithNoPassword(Matcher matcher,Scanner scanner)
+    {
+        String username=matcher.group("username");
+        String email=matcher.group("email");
+        String nickname=matcher.group("nickname");
+        if(CorrectUserName(username))
+        {
+            if(!member.ExistUsername(username))
+            {
+                this.username=username;
+                String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789*!@#$%^&*";
+                int length = 10;
+                Random random = new Random();
+                String randomString ="";
+                for (int i = 0; i < length; i++) {
+                    int index = random.nextInt(characters.length());
+                    randomString+=characters.charAt(index);
+                }
+                System.out.println("Your random password: "+randomString);
+                System.out.print("Please enter your password: ");
+                String input=scanner.nextLine();
+                if(Objects.equals(input, randomString))
+                {
+                    System.out.println("correctPassword");
+                }
+            }
+        }
+    }
+    public  void run()
     {
         Scanner scanner=new Scanner(System.in);
         String input= scanner.nextLine();
         boolean SignUp=false;
         while (!SignUp)
         {
-            if(input.matches("user create -u (?<username>.?+) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n(?<nickname>(?:\\S+\\s)*\\S+)"))
+            if(input.matches("user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
             {
-                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n(?<nickname>(?:\\S+\\s)*\\S+)");
+                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
+                matcher.find();
+                createUserWithNoPassword(matcher,scanner);
+            }
+            else if(input.matches("user create -u (?<username>.?+) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
+            {
+                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n (?<nickname>(?:\\S+\\s)*\\S+)");
                 matcher.find();
 
             }
+            input=scanner.nextLine();
         }
     }
+}
 }
