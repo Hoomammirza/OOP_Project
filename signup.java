@@ -108,8 +108,19 @@ public class signup {
         ascii_art.get(9).add("Y88b  d88P");
         ascii_art.get(9).add(" \"Y8888P\" ");
     }
+    public String createRandomNumber()
+    {
+        String answer="";
+        Random random=new Random();
+        for(int i=0;i<4;i++)
+        {
+            answer+=random.nextInt(10);
+        }
+        return answer;
+    }
     public static ArrayList<String> showRandomCaptcha(String random)
     {
+        madeAsciiArt();
         ArrayList<String>answer=new ArrayList<String>();
         for(int i=0;i<8;i++)
         {
@@ -128,6 +139,8 @@ public class signup {
     private String password;
     private String email;
     private String nickname;
+    private int NumQuestion;
+    private String QuestionAnswer;
     public void setUsername(String username)
     {
         this.username=username;
@@ -224,7 +237,7 @@ public class signup {
             return true;
         return false;
     }
-    private void createUser(Matcher matcher)
+    private void createUser(Matcher matcher,Scanner scanner)
     {
         String username=matcher.group("username");
         String password=matcher.group("password");
@@ -233,10 +246,41 @@ public class signup {
         String nickname=matcher.group("nickname");
         if(CorrectUserName(username))
         {
-            if(correctPassword(password) && !Users.ExistUsername(username))
+            if( !Users.ExistUsername(username))
             {
-                this.username=username;
-                this.password=password;
+                if(correctPassword(password) )
+                {
+                    if(correctEmail(email))
+                    {
+                        System.out.println("User created successfully. Please choose a security question : ");
+                        System.out.println("1-What is your father’s name ? ");
+                        System.out.println("2-What is your favourite color ?");
+                        System.out.println("3-What was the name of your first pet? ");
+                        String input=scanner.nextLine();
+                        if(input.matches("question pick -q (?<questionNumber>\\d+) -a (?<answer>.+?) -c (?<answerConfirm>(?:\\S+\\s)*\\S+)"))
+                        {
+                            Matcher matcher1=getCommandMatcher(input,"question pick -q (?<questionNumber>.+?) -a (?<answer>.+?) -c (?<answerConfirm>(?:\\S+\\s)*\\S+)");
+                            matcher1.find();
+                            if(Integer.parseInt(matcher1.group("questionNumber"))>0 &&Integer.parseInt(matcher1.group("questionNumber"))<4)
+                            {
+                                if(Objects.equals(matcher1.group("answer"), matcher1.group("answerConfirm")))
+                                {
+                                    this.QuestionAnswer=matcher1.group("answer");
+                                    String random=createRandomNumber();
+                                    for (int i=0;i<showRandomCaptcha(random).size();i++)
+                                    {
+                                        System.out.println(showRandomCaptcha(random).get(i));
+                                    }
+                                    input=scanner.nextLine();
+                                    if(Objects.equals(input, random))
+                                    {
+                                        System.out.println("correct");
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -281,11 +325,11 @@ public class signup {
                 matcher.find();
                 createUserWithNoPassword(matcher,scanner);
             }
-            else if(input.matches("user create -u (?<username>.?+) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
+            else if(input.matches("user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
             {
-                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>) -p (?<password>\\S+) (?<passwordConfirmation>.?+) –email (?<email>.?+) -n (?<nickname>(?:\\S+\\s)*\\S+)");
+                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
                 matcher.find();
-
+                createUser(matcher,scanner);
             }
             input=scanner.nextLine();
         }
