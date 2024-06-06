@@ -1,17 +1,14 @@
-import UserManagement.Users;
-
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class signup {
     signup(){
-        madeAsciiArt();
+        initAsciiArt();
     }
-    public static ArrayList<ArrayList<String>> ascii_art=new ArrayList<ArrayList<String>>();
-    public static void madeAsciiArt() {
+    public static ArrayList<ArrayList<String>> ascii_art=new ArrayList<>();
+    public static void initAsciiArt() {
         ascii_art.add(new ArrayList<String>());
         ascii_art.get(0).add(" .d8888b. ");
         ascii_art.get(0).add("d88P  Y88b");
@@ -103,8 +100,7 @@ public class signup {
         ascii_art.get(9).add("Y88b  d88P");
         ascii_art.get(9).add(" \"Y8888P\" ");
     }
-    public String createRandomNumber()
-    {
+    public String createRandomNumber(){
         String answer="";
         Random random=new Random();
         for(int i=0;i<4;i++)
@@ -113,9 +109,8 @@ public class signup {
         }
         return answer;
     }
-    public static ArrayList<String> showRandomCaptcha(String random)
-    {
-        madeAsciiArt();
+    public static ArrayList<String> showRandomCaptcha(String random) {
+        initAsciiArt();
         ArrayList<String>answer=new ArrayList<String>();
         for(int i=0;i<8;i++)
         {
@@ -130,26 +125,26 @@ public class signup {
         }
         return answer;
     }
-    public  void run()
+    public void run()
     {
         Scanner scanner=new Scanner(System.in);
         String input= scanner.nextLine();
         boolean SignUp=false;
         while (!SignUp)
         {
-            if(input.matches("user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
-            {
-                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
-                matcher.find();
-                createUserWithNoPassword(matcher,scanner);
-            }
-            else if(input.matches("user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
-            {
-                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
-                matcher.find();
-                createUser(matcher,scanner);
-            }
-            input=scanner.nextLine();
+//            if(input.matches("user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
+//            {
+//                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
+//                matcher.find();
+//                createUserWithNoPassword(matcher,scanner);
+//            }
+//            else if(input.matches("user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
+//            {
+//                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
+//                matcher.find();
+//                createUser(matcher,scanner);
+//            }
+//            input=scanner.nextLine();
         }
     }
 }

@@ -25,8 +25,10 @@ public class SQLhandler {
                 statement = con.createStatement();
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
-                    System.out.println(rs.getString("Email"));
-                }
+                    if (rs.getString("Password").equals(password)){
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"));
+                    }else throw new PasswordExeption();
+                } else throw new NoUserException();
             }
 
         } catch (Exception e){System.out.println(e);}

@@ -6,6 +6,8 @@ public class Main {
         SQLhandler.connect();
         try {
             SQLhandler.readUser("Hello", "H");
-        }catch (PasswordExeption)
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }
