@@ -31,8 +31,7 @@ public class User {
     public int hitpoint;
     public ArrayList<Card> hand;
     public int gamescore;
-    
-
+    public Card[] timeline = new Card[10];
 }
 enum securityQ{
     Father,
