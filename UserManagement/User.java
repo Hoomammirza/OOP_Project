@@ -1,6 +1,5 @@
 package UserManagement;
 
-import com.mysql.cj.protocol.a.NativeConstants;
 
 public class User {
     public String Username;
