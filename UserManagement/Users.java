@@ -22,6 +22,7 @@ public class Users {
         try {
             User user = SQLhandler.readUser(Username,Password);
             NumberOfTries = 0;
+            LoginUser = user;
             return user;
         }catch (NoUserException | PasswordExeption e){
             NumberOfTries++;

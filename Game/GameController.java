@@ -9,20 +9,20 @@ public class GameController {
     public User host;
     public User quest;
     public boolean UsersReady = false;
-    public Card[] hosttimeline = new Card[10];
-    public Card[] questtimeline = new Card[10];
     public void initusers() throws NoUserException,PasswordExeption{
         try {
-            signin();
+            quest = signin();
         }
         catch (NoUserException | PasswordExeption e){
             throw e;
         }
+        host.timeline = new Card[10];
+        quest.timeline = new Card[10];
     }
-    public void signin() throws NoUserException, PasswordExeption {
-
+    public User signin() throws NoUserException, PasswordExeption {
+        return null;
     };
     public void nextphase(){
-
+        
     }
 }
