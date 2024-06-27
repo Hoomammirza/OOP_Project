@@ -1,6 +1,10 @@
 package UserManagement;
 
 
+import Cards.Card;
+
+import java.util.ArrayList;
+
 public class User {
     public String Username;
     public String Password;
@@ -11,6 +15,7 @@ public class User {
     public int Level = 1;
     public int maxHP = 100;
     public int Coins = 100;
+    ArrayList<Card> cards;
     public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA){
         this.Username = Username;
         this.Password = Password;
@@ -19,6 +24,15 @@ public class User {
         this.SecurityQ = securityQ.valueOf(SecurityQ);
         this.SecurityQA = SecurityQA;
     }
+
+
+    //Game=====================================================================================================
+
+    public int hitpoint;
+    public ArrayList<Card> hand;
+    public int gamescore;
+    
+
 }
 enum securityQ{
     Father,
