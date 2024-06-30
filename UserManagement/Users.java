@@ -11,7 +11,7 @@ public class Users {
     public static User LoginUser = null;
     public static boolean ExistUsername(String username)
     {
-        return false;
+        return SQLhandler.Userexists(username);
     }
     private static Misc.Timer FailLoginTimer = new Misc.Timer(0);
     private static int NumberOfTries = 0;
@@ -29,6 +29,12 @@ public class Users {
             FailLoginTimer = new Timer(5000 * NumberOfTries);
             throw e;
         }
+    }
+    public static User.securityQ getSQ(String username){
+        return User.securityQ.valueOf(SQLhandler.getSQ(username));
+    }
+    public static boolean verifySQA(String username , String SQA){
+        return SQLhandler.verifySQA(username,SQA);
     }
 
 

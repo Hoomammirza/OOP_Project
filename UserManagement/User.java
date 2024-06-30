@@ -32,9 +32,9 @@ public class User {
     public ArrayList<Card> hand;
     public int gamescore;
     public Card[] timeline = new Card[10];
-}
-enum securityQ{
-    Father,
-    Color,
-    Pet;
+    public enum securityQ{
+        Father,
+        Color,
+        Pet;
+    }
 }

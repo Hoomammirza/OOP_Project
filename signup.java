@@ -1,3 +1,6 @@
+import Misc.Misc;
+import UserManagement.WeakPasswordException;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -145,6 +148,30 @@ public class signup {
 //                createUser(matcher,scanner);
 //            }
 //            input=scanner.nextLine();
+        }
+    }
+    public static boolean VerifyPassword(String input) throws WeakPasswordException {
+        Matcher numberCeck = Misc.getMatcher(input,"[0-9]+");
+        Matcher lowerCheck = Misc.getMatcher(input,"[a-z]+");
+        Matcher upperCheck = Misc.getMatcher(input,"[A-Z]+");
+        Matcher specialCheck = Misc.getMatcher(input,"[\\*\\!\\@\\$\\%\\^\\&\\#]+");
+        Matcher lengthCeck = Misc.getMatcher(input,"(?<=^)[0-9a-zA-Z\\*\\!\\@\\$\\%\\^\\&\\#]{8,20}(?=$)");
+        if (numberCeck.find()){
+            if (lowerCheck.find() && upperCheck.find()){
+                if (specialCheck.find()){
+                    if (lengthCeck.find()){
+                        return true;
+                    }else {
+                        throw new WeakPasswordException("Weak Password: must contain at least 8 characters!");
+                    }
+                }else {
+                    throw new WeakPasswordException("Weak Password: must contain at least one special character!");
+                }
+            }else {
+                throw new WeakPasswordException("Weak Password: must contain at least one lower and upper case letter!");
+            }
+        }else {
+            throw new WeakPasswordException("Weak Password: must contain at least one number!");
         }
     }
 }

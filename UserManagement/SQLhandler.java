@@ -50,4 +50,47 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return false;
     }
+    public static String getSQ(String username){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from user where Username = '" + username + "';");
+                if (rs.next()) {
+                    return rs.getString("SecurityQ");
+                } else {
+                    throw new RuntimeException();
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        throw new RuntimeException();
+    }
+    public static boolean verifySQA(String username,String Answer){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from user where Username = '" + username + "';");
+                if (rs.next()) {
+                    return rs.getString("SecurityQA").equals(Answer);
+                } else {
+                    throw new RuntimeException();
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        throw new RuntimeException();
+    }
+    public static void changePassword( String username ,String password){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Password = '"+password+"' WHERE Username = '"+username+"';");
+
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
 }
