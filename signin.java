@@ -6,27 +6,40 @@ import java.util.regex.Matcher;
 
 public class signin {
     static Scanner input = new Scanner(System.in);
-    public static void run(){
+    public static int n = 0;
+    public static int run(){
         String in;
         boolean quit = false;
 
         Matcher login;
         Matcher ForgotPassword;
+        Matcher exit;
+        Matcher showcurrrentmenu;
 
         while (!quit){
             in = input.nextLine();
             login = Misc.getMatcher(in,"^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
             ForgotPassword = Misc.getMatcher(in,"^forgot(\\s+)my(\\s+)password(\\s+)-u(\\s+)(?<username>\\S+)$");
+            exit = Misc.getMatcher(in, "^exit(\\s*)$");
+            showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
 
             if (login.find()){
-                login(login);
+                if (login(login))
+                    return 4;
             } else if (ForgotPassword.find()){
+                forgotpassword(ForgotPassword);
+            }else if (showcurrrentmenu.find()) {
+                System.out.println("MenuSelect");
+            }else if (exit.find()) {
+                return 0;
             }
         }
+        return 0;
     }
-    private static void login(Matcher matcher){
+    private static boolean login(Matcher matcher){
         try {
             Users.signin(matcher.group("username"), matcher.group("password"));
+            return true;
         } catch (NoUserException e) {
             System.out.println("Username doesn’t exist!");
         } catch (PasswordExeption e) {
@@ -34,8 +47,9 @@ public class signin {
         } catch (TimerException e){
             System.out.println("Try again in "+e.time+" seconds");
         }
+        return false;
     }
-    private static void forgotusername(Matcher matcher){
+    private static void forgotpassword(Matcher matcher){
         String username = matcher.group("username");
         if (Users.ExistUsername(username)){
             switch (Users.getSQ(username)){

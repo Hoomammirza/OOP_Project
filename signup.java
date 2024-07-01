@@ -1,7 +1,9 @@
 import Misc.Misc;
+import UserManagement.Users;
 import UserManagement.WeakPasswordException;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -103,10 +105,10 @@ public class signup {
         ascii_art.get(9).add("Y88b  d88P");
         ascii_art.get(9).add(" \"Y8888P\" ");
     }
-    public String createRandomNumber(){
+    public static String createRandomNumber(){
         String answer="";
         Random random=new Random();
-        for(int i=0;i<4;i++)
+        for(int i=0;i<6;i++)
         {
             answer+=random.nextInt(10);
         }
@@ -128,28 +130,99 @@ public class signup {
         }
         return answer;
     }
-    public void run()
+    public static int run()
     {
-        Scanner scanner=new Scanner(System.in);
-        String input= scanner.nextLine();
-        boolean SignUp=false;
-        while (!SignUp)
+        Scanner scanner = new Scanner(System.in);
+        String input;
+        boolean quit=false;
+
+        Matcher exit;
+        Matcher showcurrrentmenu;
+
+        while (!quit)
         {
-//            if(input.matches("user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
-//            {
-//                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p random –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
-//                matcher.find();
-//                createUserWithNoPassword(matcher,scanner);
-//            }
-//            else if(input.matches("user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)"))
-//            {
-//                Matcher matcher=getCommandMatcher(input,"user create -u (?<username>.+?) -p (?<password>\\S+) (?<passwordConfirmation>.+?) –email (?<email>.+?) -n (?<nickname>(?:\\S+\\s)*\\S+)");
-//                matcher.find();
-//                createUser(matcher,scanner);
-//            }
-//            input=scanner.nextLine();
+            input=scanner.nextLine();
+            exit = Misc.getMatcher(input, "^exit(\\s*)$");
+            showcurrrentmenu = Misc.getMatcher(input, "^show current menu(\\s*)$");
+
         }
     }
+//    private static void createUser(Matcher matcher, Scanner scanner)
+//    {
+//        String username=matcher.group("username");
+//        String password=matcher.group("password");
+//        String passwordConfirmation=matcher.group("passwordConfirmation");
+//        String email=matcher.group("email");
+//        String nickname=matcher.group("nickname");
+//        if(Users.CorrectUserName(username))
+//        {
+//            if(!Users.ExistUsername(username))
+//            {
+//                if(Users.correctPassword(password) )
+//                {
+//                    if(Users.correctEmail(email))
+//                    {
+//                        System.out.println("User created successfully. Please choose a security question : ");
+//                        System.out.println("1-What is your father’s name ? ");
+//                        System.out.println("2-What is your favourite color ?");
+//                        System.out.println("3-What was the name of your first pet? ");
+//                        String input=scanner.nextLine();
+//                        if(input.matches("question pick -q (?<questionNumber>\\d+) -a (?<answer>.+?) -c (?<answerConfirm>(?:\\S+\\s)*\\S+)"))
+//                        {
+//                            Matcher matcher1=Misc.getMatcher(input,"question pick -q (?<questionNumber>.+?) -a (?<answer>.+?) -c (?<answerConfirm>(?:\\S+\\s)*\\S+)");
+//                            matcher1.find();
+//                            if(Integer.parseInt(matcher1.group("questionNumber"))>0 &&Integer.parseInt(matcher1.group("questionNumber"))<4)
+//                            {
+//                                if(Objects.equals(matcher1.group("answer"), matcher1.group("answerConfirm")))
+//                                {
+//                                    this.QuestionAnswer=matcher1.group("answer");
+//                                    String random=createRandomNumber();
+//                                    for (int i=0;i<showRandomCaptcha(random).size();i++)
+//                                    {
+//                                        System.out.println(showRandomCaptcha(random).get(i));
+//                                    }
+//                                    input=scanner.nextLine();
+//                                    if(Objects.equals(input, random))
+//                                    {
+//                                        System.out.println("correct");
+//                                    }
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    private static void createUserWithNoPassword(Matcher matcher, Scanner scanner)
+//    {
+//        String username=matcher.group("username");
+//        String email=matcher.group("email");
+//        String nickname=matcher.group("nickname");
+//        if(Users.CorrectUserName(username))
+//        {
+//            if(!Users.ExistUsername(username))
+//            {
+//                this.username=username;
+//                String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789*!@#$%^&*";
+//                int length = 10;
+//                Random random = new Random();
+//                String randomString ="";
+//                for (int i = 0; i < length; i++) {
+//                    int index = random.nextInt(characters.length());
+//                    randomString+=characters.charAt(index);
+//                }
+//                System.out.println("Your random password: "+randomString);
+//                System.out.print("Please enter your password: ");
+//                String input=scanner.nextLine();
+//                if(Objects.equals(input, randomString))
+//                {
+//                    System.out.println("correctPassword");
+//                }
+//            }
+//        }
+//    }
+
     public static boolean VerifyPassword(String input) throws WeakPasswordException {
         Matcher numberCeck = Misc.getMatcher(input,"[0-9]+");
         Matcher lowerCheck = Misc.getMatcher(input,"[a-z]+");
