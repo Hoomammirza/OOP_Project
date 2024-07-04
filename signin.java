@@ -69,7 +69,7 @@ public class signin {
                 boolean passwordverify = false;
                 while (!passwordverify){
                     try {
-                        signup.VerifyPassword(password);
+                        signup.verifyPassword(password);
                         passwordverify = true;
                     }catch (WeakPasswordException e){
                         System.out.println(e.message);

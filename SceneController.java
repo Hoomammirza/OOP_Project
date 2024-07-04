@@ -15,6 +15,8 @@ public class SceneController {
                     n = MenuSelect.run();
                 case 2:
                     n = signin.run();
+                case 3:
+                    n = signup.run();
             }
         }
     }

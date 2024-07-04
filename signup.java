@@ -1,9 +1,11 @@
 import Misc.Misc;
+import UserManagement.User;
 import UserManagement.Users;
 import UserManagement.WeakPasswordException;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Security;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -138,14 +140,77 @@ public class signup {
 
         Matcher exit;
         Matcher showcurrrentmenu;
+        Matcher signup;
+        Matcher back;
 
         while (!quit)
         {
             input=scanner.nextLine();
             exit = Misc.getMatcher(input, "^exit(\\s*)$");
+            back = Misc.getMatcher(input, "^back(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(input, "^show current menu(\\s*)$");
+            signup = Misc.getMatcher(input, "^user(\\s+)create(\\s+)-u(\\s+)(?<username>\\S*)(\\s+)-p(\\s+)(?<password>\\S*)(\\s+)(?<passwordconfirmation>\\S*)(\\s+)–email(\\s+)(?<email>\\S*)(\\s+)-n(\\s+)(?<nickname>\\S*)(\\s*)?");
 
+            if (exit.find()){
+                return 0;
+            }else if (showcurrrentmenu.find()){
+                System.out.println("Registermenu");
+            }else if (signup.find()){
+                signup(signup);
+            }else if (back.find()){
+                return 1;
+            }
         }
+        return 0;
+    }
+    public static void signup(Matcher matcher){
+        String username=matcher.group("username");
+        String password=matcher.group("password");
+        String passwordconfirmation=matcher.group("passwordconfirmation");
+        String email=matcher.group("email");
+        String nickname=matcher.group("nickname");
+        String securityQA;
+        String securityQAc;
+        User.securityQ securityQ;
+        if (!username.isEmpty()&&!password.isEmpty()&&!passwordconfirmation.isEmpty()&&!email.isBlank()&&!nickname.isEmpty()){
+            if (verifyUsername(username)) {
+                if (!Users.ExistUsername(username)) {
+                    try {
+                        verifyPassword(password);
+                        if (password.equals(passwordconfirmation)){
+                            if (verifyEmail(email)){
+                                System.out.println("User created successfully. Please choose a security question :\n" +
+                                        "• 1-What is your father’s name ?\n" +
+                                        "• 2-What is your favourite color ?\n" +
+                                        "• 3-What was the name of your first pet?\n" +
+                                        "answer using this format:" +
+                                        "question pick -q <question-number> -a <answer> -c <answer- confirm>\n");
+                                String input = new Scanner(System.in).nextLine();
+                                Matcher matcher1 = Misc.getMatcher(input,"^question(\\s+)pick(\\s+)-q(\\s+)(?<questionnumber>\\S+)(\\s+)-a(\\s+)(?<answer>\\S+)(\\s+)-c(\\s+)(?<answerconfirm>\\S+)$");
+                                if (matcher1.find()){
+                                    matcher1.group("questionnumber")
+                                }
+
+                            }else {
+                                System.out.println("invalid email!");
+                            }
+                        }else {
+                            System.out.println("password doesn't match password confirmation!");
+                        }
+                    } catch (WeakPasswordException e) {
+                        System.out.println(e);
+                    }
+                } else {
+                    System.out.println("a user with this username already exists!");
+                }
+            }else {
+                System.out.println("invalid username: username should contain only letters numbers and underscore!");
+            }
+        }else {
+            System.out.println("please fill all fields!");
+        }
+
+
     }
 //    private static void createUser(Matcher matcher, Scanner scanner)
 //    {
@@ -223,7 +288,7 @@ public class signup {
 //        }
 //    }
 
-    public static boolean VerifyPassword(String input) throws WeakPasswordException {
+    public static boolean verifyPassword(String input) throws WeakPasswordException {
         Matcher numberCeck = Misc.getMatcher(input,"[0-9]+");
         Matcher lowerCheck = Misc.getMatcher(input,"[a-z]+");
         Matcher upperCheck = Misc.getMatcher(input,"[A-Z]+");
@@ -246,5 +311,13 @@ public class signup {
         }else {
             throw new WeakPasswordException("Weak Password: must contain at least one number!");
         }
+    }
+    public static boolean verifyUsername(String usename){
+        Matcher verify = Misc.getMatcher(usename,"^([a-zA-z_0-9]+)$");
+        return verify.matches();
+    }
+    public static boolean verifyEmail(String email){
+        Matcher verify = Misc.getMatcher(email,"^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$");
+        return verify.matches();
     }
 }

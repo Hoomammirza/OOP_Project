@@ -1,5 +1,6 @@
 package UserManagement;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -92,5 +93,14 @@ public class SQLhandler {
 
             }
         } catch (Exception e){System.out.println(e);}
+    }
+    public void createuser(User user){
+        Statement statement;
+        try {
+            statement = con.createStatement();
+            statement.execute("insert into user (Username,Password,Nickname,Email,SecurityQ,SecurityQA,isAdmin) VALUES ('"+user.Username+"','"+user.Password+"','"+user.Nickname+"','"+user.Email+"','"+user.SecurityQ.toString()+"','"+user.SecurityQA+"','"+user.isAdmin+"');");
+        }catch (Exception e){
+            System.out.println(e);
+        }
     }
 }
