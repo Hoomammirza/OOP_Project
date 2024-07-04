@@ -39,7 +39,7 @@ public class MainMenu {
             showMenu=Misc.getMatcher(in,"go to shop menu");
             exitAccount=Misc.getMatcher(in,"exit account");
             if (startGame.find()){
-
+                printCard();
             }
             else if (showCard.find()){
 
@@ -51,8 +51,18 @@ public class MainMenu {
             {
                 System.out.println("Main Menu");
             }
-
         }
         return 0;
+    }
+    public static void printCard()
+    {
+        for (int i=0;i<Users.LoginUser.cards.size();i++)
+        {
+            System.out.println("name:  "+Users.LoginUser.cards.get(i).name+"\n"
+                    +"duration: "+Users.LoginUser.cards.get(i).Duration+"\n"+
+                    "card attack/defences:  "+Users.LoginUser.cards.get(i).defence_attack+"\n"+
+                    "player damage:  "+Users.LoginUser.cards.get(i).playerDamage+"\n"+
+                    "level:  "+Users.LoginUser.cards.get(i).level);
+        }
     }
 }

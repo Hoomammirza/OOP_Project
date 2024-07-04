@@ -8,6 +8,7 @@ public class Card {
     public int playerDamage;
     public int upgradeLevel;
     public double upgradeCost;
+    public int level=1;
     public Card(String name, int defence_attack, int Duration, int playerDamage, double upgradeCost, int upgradeLevel, String feature)
     {
         this.name=name;
