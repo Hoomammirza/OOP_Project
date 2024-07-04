@@ -22,6 +22,8 @@ public class SceneController {
                     break;
                 case 4:
                     n=MainMenu.run();
+                case 5:
+                    n=ProfileMenu.run();
             }
         }
     }
