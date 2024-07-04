@@ -188,7 +188,7 @@ public class signup {
                                 String input = new Scanner(System.in).nextLine();
                                 Matcher matcher1 = Misc.getMatcher(input,"^question(\\s+)pick(\\s+)-q(\\s+)(?<questionnumber>\\S+)(\\s+)-a(\\s+)(?<answer>\\S+)(\\s+)-c(\\s+)(?<answerconfirm>\\S+)$");
                                 if (matcher1.find()){
-                                    matcher1.group("questionnumber")
+                                    matcher1.group("questionnumber");
                                 }
 
                             }else {
@@ -212,6 +212,7 @@ public class signup {
 
 
     }
+
 //    private static void createUser(Matcher matcher, Scanner scanner)
 //    {
 //        String username=matcher.group("username");

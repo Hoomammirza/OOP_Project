@@ -5,6 +5,8 @@ import UserManagement.NoUserException;
 import UserManagement.PasswordExeption;
 import UserManagement.User;
 
+import UserManagement.User;
+
 public class GameController {
     public User host;
     public User quest;
