@@ -1,10 +1,7 @@
 package UserManagement;
 
 import javax.swing.plaf.nimbus.State;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
 public class SQLhandler {
     public static boolean isConnected = false;
@@ -27,12 +24,12 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("SecurityQA"));
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"));
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
 
-        } catch (Exception e){System.out.println(e);}
+        } catch (SQLException e){System.out.println(e);}
         return null;
     }
     public static boolean Userexists(String username){

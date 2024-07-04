@@ -23,6 +23,7 @@ public class ProfileMenu {
         Matcher changepassword;
         Matcher back;
         Matcher showcurrrentmenu;
+        Matcher exit;
 
         System.out.println("commands:\n" +
                 "*  show information\n" +
@@ -40,6 +41,7 @@ public class ProfileMenu {
             changeemail = Misc.getMatcher(in,"^profile(\\s+)change(\\s+)-e(\\s+)(?<email>\\S+)(\\s*)$");
             changepassword = Misc.getMatcher(in,"^profile(\\s+)change(\\s+)password(\\s+)-o(\\s+)(?<oldpassword>\\S+)(\\s+)-n(\\s+)(?<newpassword>\\S+)(\\s*)$");
             back = Misc.getMatcher(in, "^back(\\s*)$");
+            exit = Misc.getMatcher(in, "^exit(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
 
             if (showinformation.find()){
@@ -53,9 +55,11 @@ public class ProfileMenu {
             } else if (changepassword.find()){
                 changePassword(changepassword);
             }else if (showcurrrentmenu.find()) {
-                System.out.println("signin");
+                System.out.println("ProfileMenu");
             }else if (back.find()) {
                 return 4;
+            }else if (exit.find()) {
+                return 0;
             }
         }
         return 0;
@@ -115,6 +119,7 @@ public class ProfileMenu {
                 }catch(WeakPasswordException e){
                     String s = e.message;
                     System.out.println(s);
+                    return;
                 }
                 String captcha = signup.getrandomcaptcha();
                 ArrayList<String> captchashow = signup.showRandomCaptcha(captcha);

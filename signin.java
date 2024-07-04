@@ -47,13 +47,18 @@ public class signin {
             Users.signin(matcher.group("username"), matcher.group("password"));
             return true;
         } catch (NoUserException e) {
+            String s = e.toString();
             System.out.println("Username doesn’t exist!");
+            return false;
         } catch (PasswordExeption e) {
+            String s = e.toString();
             System.out.println("Password and Username don’t match!");
+            return false;
         } catch (TimerException e){
+            String s = e.toString();
             System.out.println("Try again in "+e.time+" seconds");
+            return false;
         }
-        return false;
     }
     private static void forgotpassword(Matcher matcher){
         String username = matcher.group("username");

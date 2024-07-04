@@ -1,3 +1,4 @@
+import Game.Game;
 import Misc.Misc;
 
 import java.util.Scanner;
@@ -22,8 +23,12 @@ public class SceneController {
                     break;
                 case 4:
                     n=MainMenu.run();
+                    break;
                 case 5:
                     n=ProfileMenu.run();
+                    break;
+                case 6:
+                    n=Game.run();
             }
         }
     }
