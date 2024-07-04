@@ -5,6 +5,7 @@ import Cards.Card;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class User {
     public String Username;
@@ -34,6 +35,7 @@ public class User {
     public int hitpoint;
     public ArrayList<Card> hand;
     public int gamescore;
+    public boolean visibleCard=true;
     public Card[] timeline = new Card[10];
     public enum securityQ{
         Father,
