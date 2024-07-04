@@ -26,8 +26,8 @@ public class MainMenu {
                 "* show my cards:\n" +
                 "* show history game\n" +
                 "* show current menu\n" +
-                "* go to shop menu\n"+
-                "* go to profile menu"+
+                "* shop menu\n"+
+                "* profile menu\n"+
                 "* exit account");
 
         while (!quit){
@@ -35,9 +35,9 @@ public class MainMenu {
             startGame = Misc.getMatcher(in,"start game");
             showCard = Misc.getMatcher(in,"show my cards:");
             HistoryGame = Misc.getMatcher(in, "show history game");
-            ProfileMenu = Misc.getMatcher(in, "go to profile menu");
+            ProfileMenu = Misc.getMatcher(in, "profile menu");
             showMenu=Misc.getMatcher(in,"show current menu");
-            showMenu=Misc.getMatcher(in,"go to shop menu");
+            showMenu=Misc.getMatcher(in,"shop menu");
             exitAccount=Misc.getMatcher(in,"exit account");
             if (startGame.find()){
             }
