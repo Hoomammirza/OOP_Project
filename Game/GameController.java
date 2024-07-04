@@ -10,6 +10,7 @@ import UserManagement.User;
 public class GameController {
     public User host;
     public User quest;
+    public int round;
     public boolean UsersReady = false;
     public void initusers() throws NoUserException,PasswordExeption{
         try {
