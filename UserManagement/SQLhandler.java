@@ -84,7 +84,6 @@ public class SQLhandler {
         throw new RuntimeException();
     }
     public static void changePassword( String username ,String password){
-        ResultSet rs;
         Statement statement;
         try {
             if (isConnected) {
@@ -103,4 +102,38 @@ public class SQLhandler {
             System.out.println(e);
         }
     }
+    public static void changeUsername( User user ,String Username){
+        Statement statement;
+        String username = user.Username;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Username = '"+Username+"' WHERE Username = '"+username+"';");
+
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
+    public static void changeEmail( User user ,String Email){
+        Statement statement;
+        String username = user.Username;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Email = '"+Email+"' WHERE Username = '"+username+"';");
+
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
+    public static void changeNickname( User user ,String Nickname){
+        Statement statement;
+        String username = user.Username;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Nickname = '"+Nickname+"' WHERE Username = '"+username+"';");
+
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
+
 }
