@@ -27,7 +27,7 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"));
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("SecurityQA"));
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
@@ -94,7 +94,7 @@ public class SQLhandler {
             }
         } catch (Exception e){System.out.println(e);}
     }
-    public void createuser(User user){
+    public static void createuser(User user){
         Statement statement;
         try {
             statement = con.createStatement();

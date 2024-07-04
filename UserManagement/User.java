@@ -3,6 +3,7 @@ package UserManagement;
 
 import Cards.Card;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 public class User {
@@ -17,13 +18,14 @@ public class User {
     public int Coins = 100;
     public boolean isAdmin = false;
     ArrayList<Card> cards;
-    public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA){
+    public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA,boolean isAdmin){
         this.Username = Username;
         this.Password = Password;
         this.Nickname = Nickname;
         this.Email = Email;
         this.SecurityQ = securityQ.valueOf(SecurityQ);
         this.SecurityQA = SecurityQA;
+        this.isAdmin = isAdmin;
     }
 
 

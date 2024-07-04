@@ -14,6 +14,11 @@ public class MenuSelect {
         Matcher showcurrrentmenu;
         Matcher exit;
 
+        System.out.println("select menu: \n" +
+                "*  signin\n" +
+                "*  signup\n" +
+                "*  exit");
+
         while (true) {
             input = in.nextLine();
             signin = Misc.getMatcher(input, "^signin(\\s*)$");

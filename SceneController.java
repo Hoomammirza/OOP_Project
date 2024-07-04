@@ -13,10 +13,13 @@ public class SceneController {
                     return;
                 case 1:
                     n = MenuSelect.run();
+                    break;
                 case 2:
                     n = signin.run();
+                    break;
                 case 3:
                     n = signup.run();
+                    break;
             }
         }
     }

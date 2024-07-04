@@ -36,8 +36,9 @@ public class Users {
     public static boolean verifySQA(String username , String SQA){
         return SQLhandler.verifySQA(username,SQA);
     }
+    public void changePassword() {
 
-
+    }
 
     public static boolean CorrectUserName(String s)
     {

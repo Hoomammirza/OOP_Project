@@ -16,6 +16,12 @@ public class signin {
         Matcher exit;
         Matcher showcurrrentmenu;
 
+        System.out.println("commands:\n" +
+                "*  user login -u <username> -p <password>\n" +
+                "*  forgot my password -u <username>\n" +
+                "*  show current menu\n" +
+                "*  exit");
+
         while (!quit){
             in = input.nextLine();
             login = Misc.getMatcher(in,"^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
@@ -29,7 +35,7 @@ public class signin {
             } else if (ForgotPassword.find()){
                 forgotpassword(ForgotPassword);
             }else if (showcurrrentmenu.find()) {
-                System.out.println("MenuSelect");
+                System.out.println("signin");
             }else if (exit.find()) {
                 return 0;
             }
@@ -61,6 +67,7 @@ public class signin {
                     break;
                 case Color:
                     System.out.println("What was the name of your first pet?");
+                    break;
             }
             String Answer = input.nextLine();
             if (Users.verifySQA(username,Answer)){
@@ -75,11 +82,14 @@ public class signin {
                         System.out.println(e.message);
                         System.out.println("enter you new password!");
                         password = input.nextLine();
+                        if (password.equals("exit"))
+                            return;
                     }
                 }
-
+                SQLhandler.changePassword(username,password);
+                System.out.println("password change successful!");
             }else {
-
+                System.out.println("security question answer doesn't match!");
             }
         }else {
             System.out.println("this username doesn't exist!");

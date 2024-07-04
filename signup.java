@@ -1,4 +1,5 @@
 import Misc.Misc;
+import UserManagement.SQLhandler;
 import UserManagement.User;
 import UserManagement.Users;
 import UserManagement.WeakPasswordException;
@@ -14,8 +15,9 @@ public class signup {
     signup(){
         initAsciiArt();
     }
-    public static ArrayList<ArrayList<String>> ascii_art=new ArrayList<>();
+    public static ArrayList<ArrayList<String>> ascii_art;
     public static void initAsciiArt() {
+        ascii_art=new ArrayList<>();
         ascii_art.add(new ArrayList<String>());
         ascii_art.get(0).add(" .d8888b. ");
         ascii_art.get(0).add("d88P  Y88b");
@@ -107,15 +109,6 @@ public class signup {
         ascii_art.get(9).add("Y88b  d88P");
         ascii_art.get(9).add(" \"Y8888P\" ");
     }
-    public static String createRandomNumber(){
-        String answer="";
-        Random random=new Random();
-        for(int i=0;i<6;i++)
-        {
-            answer+=random.nextInt(10);
-        }
-        return answer;
-    }
     public static ArrayList<String> showRandomCaptcha(String random) {
         initAsciiArt();
         ArrayList<String>answer=new ArrayList<String>();
@@ -134,6 +127,8 @@ public class signup {
     }
     public static int run()
     {
+        initAsciiArt();
+
         Scanner scanner = new Scanner(System.in);
         String input;
         boolean quit=false;
@@ -142,6 +137,11 @@ public class signup {
         Matcher showcurrrentmenu;
         Matcher signup;
         Matcher back;
+        System.out.println("commands:\n" +
+                "*  user create -u <username> -p <password> <password confirmation> –email <email> -n <nickname>\n" +
+                "*  show current menu\n" +
+                "*  exit");
+
 
         while (!quit)
         {
@@ -149,7 +149,7 @@ public class signup {
             exit = Misc.getMatcher(input, "^exit(\\s*)$");
             back = Misc.getMatcher(input, "^back(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(input, "^show current menu(\\s*)$");
-            signup = Misc.getMatcher(input, "^user(\\s+)create(\\s+)-u(\\s+)(?<username>\\S*)(\\s+)-p(\\s+)(?<password>\\S*)(\\s+)(?<passwordconfirmation>\\S*)(\\s+)–email(\\s+)(?<email>\\S*)(\\s+)-n(\\s+)(?<nickname>\\S*)(\\s*)?");
+            signup = Misc.getMatcher(input, "^user(\\s+)create(\\s+)-u(\\s+)(?<username>\\S*)(\\s+)-p(\\s+)(?<password>\\S*)(\\s+)(?<passwordconfirmation>\\S*)(\\s)-email(\\s+)(?<email>\\S*)(\\s+)-n(\\s+)(?<nickname>\\S*)(\\s*)$");
 
             if (exit.find()){
                 return 0;
@@ -170,36 +170,100 @@ public class signup {
         String email=matcher.group("email");
         String nickname=matcher.group("nickname");
         String securityQA;
+        String securityQs;
         String securityQAc;
-        User.securityQ securityQ;
-        if (!username.isEmpty()&&!password.isEmpty()&&!passwordconfirmation.isEmpty()&&!email.isBlank()&&!nickname.isEmpty()){
+        User.securityQ securityQ = null;
+        if (!username.isEmpty()&&!password.isEmpty()&&!email.isBlank()&&!nickname.isEmpty()){
             if (verifyUsername(username)) {
                 if (!Users.ExistUsername(username)) {
-                    try {
-                        verifyPassword(password);
-                        if (password.equals(passwordconfirmation)){
-                            if (verifyEmail(email)){
-                                System.out.println("User created successfully. Please choose a security question :\n" +
-                                        "• 1-What is your father’s name ?\n" +
-                                        "• 2-What is your favourite color ?\n" +
-                                        "• 3-What was the name of your first pet?\n" +
-                                        "answer using this format:" +
-                                        "question pick -q <question-number> -a <answer> -c <answer- confirm>\n");
-                                String input = new Scanner(System.in).nextLine();
-                                Matcher matcher1 = Misc.getMatcher(input,"^question(\\s+)pick(\\s+)-q(\\s+)(?<questionnumber>\\S+)(\\s+)-a(\\s+)(?<answer>\\S+)(\\s+)-c(\\s+)(?<answerconfirm>\\S+)$");
-                                if (matcher1.find()){
-                                    matcher1.group("questionnumber");
-                                }
-
-                            }else {
-                                System.out.println("invalid email!");
+                    if (!password.equals("random")) {
+                        try {
+                            verifyPassword(password);
+                            if (password.equals(passwordconfirmation)) {
+                            } else {
+                                System.out.println("password doesn't match password confirmation!");
+                                return;
                             }
-                        }else {
-                            System.out.println("password doesn't match password confirmation!");
+                        } catch (WeakPasswordException e) {
+                            String s = e.message;
+                            System.out.println(s);
+                            return;
                         }
-                    } catch (WeakPasswordException e) {
-                        System.out.println(e);
+                    }else {
+                        password = generateRandomPassword();
+                        System.out.println("your password is: " + password);
+                        passwordconfirmation = new Scanner(System.in).nextLine();
+                        if (!passwordconfirmation.equals(password)){
+                            System.out.println("Password confirmation doesn't match!");
+                            return;
+                        }
                     }
+                    if (verifyEmail(email)) {
+                        System.out.println("User created successfully. Please choose a security question :\n" +
+                                "• 1-What is your father’s name ?\n" +
+                                "• 2-What is your favourite color ?\n" +
+                                "• 3-What was the name of your first pet?\n" +
+                                "answer using this format:" +
+                                "question pick -q <question-number> -a <answer> -c <answer- confirm>");
+                        String input = new Scanner(System.in).nextLine();
+                        Matcher matcher1 = Misc.getMatcher(input, "^question(\\s+)pick(\\s+)-q(\\s+)(?<questionnumber>\\S+)(\\s+)-a(\\s+)(?<answer>\\S+)(\\s+)-c(\\s+)(?<answerconfirm>\\S+)$");
+                        if (matcher1.find()) {
+                            securityQs = matcher1.group("questionnumber");
+                            if (securityQs.matches("\\d")) {
+                                switch (Integer.parseInt(securityQs)) {
+                                    case 1:
+                                        securityQ = User.securityQ.Father;
+                                        break;
+                                    case 2:
+                                        securityQ = User.securityQ.Color;
+                                        break;
+                                    case 3:
+                                        securityQ = User.securityQ.Pet;
+                                        break;
+                                    default:
+                                        System.out.println("invalid security question number!");
+                                        return;
+                                }
+                                securityQA = matcher1.group("answer");
+                                securityQAc = matcher1.group("answerconfirm");
+                                if (securityQA.equals(securityQAc)) {
+                                    String captcha = getrandomcaptcha();
+                                    ArrayList<String> captchashow = showRandomCaptcha(captcha);
+                                    for (int i = 0; i < captcha.length(); i++) {
+                                        Random random = new Random(System.currentTimeMillis());
+                                        for (int j = 0; j < 40; j++) {
+                                            int k = random.nextInt(captcha.length()*(12) - 3);
+                                            int m = random.nextInt(8);
+                                            captchashow.set(m,captchashow.get(m).substring(0,k)+'A'+captchashow.get(m).substring(k+1));
+                                        }
+                                    }
+                                    System.out.println("please write the numbers you see on screen:");
+                                    for (int j = 0; j < 8; j++) {
+                                        System.out.println(captchashow.get(j));
+                                    }
+                                    String captchaanswer = new Scanner(System.in).nextLine();
+                                    if (captcha.equals(captchaanswer)) {
+                                        User tempuser = new User(username, password, nickname, email, securityQ.toString(), securityQA, false);
+                                        //SQLhandler.createuser(tempuser);
+                                        System.out.println("signup successful :D");
+                                    }else {
+                                        System.out.println("captcha failed!");
+                                    }
+                                } else {
+                                    System.out.println("answer confirmation does not match!");
+                                }
+                            } else {
+                                System.out.println("invalid security question number!");
+                                return;
+                            }
+                        } else {
+                            System.out.println("invalid command!");
+                        }
+
+                    } else {
+                        System.out.println("invalid email!");
+                    }
+
                 } else {
                     System.out.println("a user with this username already exists!");
                 }
@@ -209,10 +273,29 @@ public class signup {
         }else {
             System.out.println("please fill all fields!");
         }
-
-
     }
-
+    public static String generateRandomPassword(){
+        String[] strings = new String[]{"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz","0123456789","!@#$%^&*"};
+        Random random = new Random(System.currentTimeMillis());
+        String password = "";
+        int i = random.nextInt(8);
+        for (int j = 0; j < 8 + i; j++) {
+             password += getrandomCharachter(strings[j%4],random);
+        }
+        return password;
+    }
+    public static char getrandomCharachter(String s,Random random){
+        return s.charAt(random.nextInt(s.length()));
+    }
+    public static String getrandomcaptcha(){
+        Random random = new Random(System.currentTimeMillis());
+        String result = "";
+        int i = 5 + random.nextInt(4);
+        for (int j = 0; j < i; j++) {
+            result += Integer.toString(random.nextInt(10));
+        }
+        return result;
+    }
 //    private static void createUser(Matcher matcher, Scanner scanner)
 //    {
 //        String username=matcher.group("username");
