@@ -39,7 +39,7 @@ public class CardsController {
                 {
                     if(host.timeline[a]==null)
                     {
-                        host.timeline[a]=new Card("empty",0,1,0,1,0,null);
+                        host.timeline[a]=new Card("empty",0,1,0,1,0,null,null);
                         empty=true;
                     }
                     a=random.nextInt(10);
@@ -62,7 +62,7 @@ public class CardsController {
                 {
                     if(guest.timeline[a]==null)
                     {
-                        guest.timeline[a]=new Card("empty",0,1,0,1,0,null);
+                        guest.timeline[a]=new Card("empty",0,1,0,1,0,null,null);
                         empty=true;
                     }
                     a=random.nextInt(10);

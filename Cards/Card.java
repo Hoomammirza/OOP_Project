@@ -9,7 +9,8 @@ public class Card {
     public int upgradeLevel;
     public double upgradeCost;
     public int level=1;
-    public Card(String name, int defence_attack, int Duration, int playerDamage, double upgradeCost, int upgradeLevel, String feature)
+    String character;
+    public Card(String name, int defence_attack, int Duration, int playerDamage, double upgradeCost, int upgradeLevel, String feature,String character)
     {
         this.name=name;
         this.defence_attack=defence_attack;
@@ -18,5 +19,6 @@ public class Card {
         this.upgradeLevel=upgradeLevel;
         this.upgradeCost=upgradeCost;
         this.feature=feature;
+        this.character=character;
     }
 }

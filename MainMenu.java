@@ -40,7 +40,7 @@ public class MainMenu {
             showMenu=Misc.getMatcher(in,"shop menu");
             exitAccount=Misc.getMatcher(in,"exit account");
             if (startGame.find()){
-                return
+                return 6;
             }
             else if (showCard.find()){
                 printCard();
