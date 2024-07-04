@@ -156,14 +156,17 @@ public class signup {
             }else if (showcurrrentmenu.find()){
                 System.out.println("Registermenu");
             }else if (signup.find()){
-                signup(signup);
+                if(signup(signup))
+                {
+                    return 4;
+                }
             }else if (back.find()){
                 return 1;
             }
         }
         return 0;
     }
-    public static void signup(Matcher matcher){
+    public static boolean signup(Matcher matcher){
         String username=matcher.group("username");
         String password=matcher.group("password");
         String passwordconfirmation=matcher.group("passwordconfirmation");
@@ -182,12 +185,12 @@ public class signup {
                             if (password.equals(passwordconfirmation)) {
                             } else {
                                 System.out.println("password doesn't match password confirmation!");
-                                return;
+                                return false;
                             }
                         } catch (WeakPasswordException e) {
                             String s = e.message;
                             System.out.println(s);
-                            return;
+                            return false;
                         }
                     }else {
                         password = generateRandomPassword();
@@ -195,7 +198,7 @@ public class signup {
                         passwordconfirmation = new Scanner(System.in).nextLine();
                         if (!passwordconfirmation.equals(password)){
                             System.out.println("Password confirmation doesn't match!");
-                            return;
+                            return false;
                         }
                     }
                     if (verifyEmail(email)) {
@@ -222,7 +225,7 @@ public class signup {
                                         break;
                                     default:
                                         System.out.println("invalid security question number!");
-                                        return;
+                                        return false;
                                 }
                                 securityQA = matcher1.group("answer");
                                 securityQAc = matcher1.group("answerconfirm");
@@ -244,8 +247,9 @@ public class signup {
                                     String captchaanswer = new Scanner(System.in).nextLine();
                                     if (captcha.equals(captchaanswer)) {
                                         User tempuser = new User(username, password, nickname, email, securityQ.toString(), securityQA, false);
-                                        //SQLhandler.createuser(tempuser);
+                                        SQLhandler.createuser(tempuser);
                                         System.out.println("signup successful :D");
+                                        return true;
                                     }else {
                                         System.out.println("captcha failed!");
                                     }
@@ -254,7 +258,7 @@ public class signup {
                                 }
                             } else {
                                 System.out.println("invalid security question number!");
-                                return;
+                                return false;
                             }
                         } else {
                             System.out.println("invalid command!");
@@ -273,6 +277,7 @@ public class signup {
         }else {
             System.out.println("please fill all fields!");
         }
+        return false;
     }
     public static String generateRandomPassword(){
         String[] strings = new String[]{"ABCDEFGHIJKLMNOPQRSTUVWXYZ","abcdefghijklmnopqrstuvwxyz","0123456789","!@#$%^&*"};

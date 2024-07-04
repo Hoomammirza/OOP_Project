@@ -20,6 +20,8 @@ public class SceneController {
                 case 3:
                     n = signup.run();
                     break;
+                case 4:
+                    n=MainMenu.run();
             }
         }
     }
