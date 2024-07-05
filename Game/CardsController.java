@@ -117,6 +117,12 @@ public class CardsController {
         }
         else if(Objects.equals(feature,"removeCardFromHand"))
         {
+            Random random=new Random();
+            int a=random.nextInt(5);
+            Card card=guest.hand.get(a);
+            host.hand.add(card);
+            guest.become4CardInHand=true;
+            guest.become6CardInHandOneTime=true;
 
         }
         else if(Objects.equals(feature,"reducePowerOpponentCard"))
