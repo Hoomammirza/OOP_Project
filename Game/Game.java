@@ -68,7 +68,7 @@ public class Game {
 
         System.out.println("commands:\n" +
                 "*  user login -u <username> -p <password>\n"
-        +"show current menu ");
+        +       "*  show current menu ");
 
         while (!quit){
             String in = input.nextLine();
@@ -79,7 +79,7 @@ public class Game {
             }
             else if(showcurrrentmenu.find())
             {
-                System.out.println("game");
+                System.out.println("Gamemenu: login");
             }
         }
     }

@@ -28,13 +28,24 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"));
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP"));
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
 
         } catch (SQLException e){System.out.println(e);}
         return null;
+    }
+    public static void updateUser(User user){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Level = "+user.Level+",Coins = "+user.Coins+",XP = "+user.XP+" where Username = '"+user.Username+"';");
+            }
+
+        } catch (SQLException e){System.out.println(e);}
     }
     public static boolean Userexists(String username){
         ResultSet rs;
@@ -265,6 +276,4 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return 0;
     }
-
-
 }
