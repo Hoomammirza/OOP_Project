@@ -126,6 +126,5 @@ public class Game {
         return false;
     }
     public static void timelineInputOutput(User Host,User Guest){
-
     }
 }

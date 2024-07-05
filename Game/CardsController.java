@@ -243,7 +243,7 @@ public class CardsController {
     }
     public static boolean doActionNow(String name)
     {
-        if(Objects.equals(name,"") || Objects.equals(name,"") ||Objects.equals(name,"")|| Objects.equals(name,""))
+        if(Objects.equals(name,"Mover") || Objects.equals(name,"Scaffholding") ||Objects.equals(name,"Blackhole")|| Objects.equals(name,"Time God")||Objects.equals(name,"Poison pouch")||Objects.equals(name,"Duplicator")||Objects.equals(name,"Smoke bomb")||Objects.equals(name,"Strength poison")||Objects.equals(name,"shield"))
         {
             return true;
         }
