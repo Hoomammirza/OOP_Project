@@ -28,7 +28,7 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"));
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"));
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
@@ -240,16 +240,27 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return cards;
     }
-    public static int getCardlevel(User user,  String name){
+    public static ArrayList<Card> getUsercards(User user){
         ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"';");
+                while (rs.next()) {
+                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }
+    public static int updateCard(User user,  String name, int level){
         Statement statement;
         try {
             if (isConnected) {
                 statement = con.createStatement();
-                rs = statement.executeUpdate("select * from usercard where Name = '" + name + "' and Username = '"+user.Username+"';");
-                if (rs.next()) {
-                    return rs.getInt("level");
-                }
+                statement.executeUpdate("update usercard set level = "+ (level)+" where Name = '" + name + "' and Username = '"+user.Username+"';");
             }
         } catch (Exception e){System.out.println(e);}
         return 0;
