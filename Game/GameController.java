@@ -16,13 +16,13 @@ public class GameController {
     public boolean UsersReady = false;
     public void initusers() throws NoUserException,PasswordExeption{
         try {
-            quest = signin();
+            quest1 = signin();
         }
         catch (NoUserException | PasswordExeption e){
             throw e;
         }
-        host.timeline = new Card[10];
-        quest.timeline = new Card[10];
+        host1.timeline = new Card[10];
+        quest1.timeline = new Card[10];
     }
     public User signin() throws NoUserException, PasswordExeption {
         return null;
