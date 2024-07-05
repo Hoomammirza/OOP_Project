@@ -29,6 +29,17 @@ public class User {
         this.SecurityQA = SecurityQA;
         this.isAdmin = isAdmin;
     }
+    public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA,boolean isAdmin,int Level,int Coins){
+        this.Username = Username;
+        this.Password = Password;
+        this.Nickname = Nickname;
+        this.Email = Email;
+        this.SecurityQ = securityQ.valueOf(SecurityQ);
+        this.SecurityQA = SecurityQA;
+        this.isAdmin = isAdmin;
+        this.Level = Level;
+        this.Coins = Coins;
+    }
 
 
     //Game=====================================================================================================
