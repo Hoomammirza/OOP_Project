@@ -52,6 +52,7 @@ public class User {
     public boolean become6CardInHand=false;
     public boolean become6CardInHandOneTime=false;
     public ArrayList<Card> hand;
+    public ArrayList<ArrayList<String>> comeInHound=new ArrayList<ArrayList<String>>();
     public int gamescore;
     public boolean visibleCard=true;
     public Card[] timeline = new Card[21];
