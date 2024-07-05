@@ -20,7 +20,27 @@ public class CardsController {
         }
         else if(Objects.equals(feature,"randomBuff"))
         {
-
+            Random random=new Random();
+            int a=random.nextInt(10);
+            boolean empty=true;
+            while (empty)
+            {
+                if(host.timeline[a]!=null)
+                {
+                    if(!Objects.equals(host.timeline[a].name, "empty"))
+                    {
+                        for(int j=0;j<host.timeline[a].Duration;j++)
+                        {
+                            host.timeline[a+j].defence_attack=(int) (host.timeline[a+j].defence_attack*1.2);
+                            empty=false;
+                        }
+                    }
+                }
+                if(empty)
+                {
+                    a=random.nextInt(10);
+                }
+            }
         }
         else if(Objects.equals(feature,"changeHole"))
         {
@@ -32,10 +52,13 @@ public class CardsController {
                 a=random.nextInt(10);
                 for (int j=0;j<10 && !empty;j++)
                 {
-                    if(Objects.equals(host.timeline[j].name, "empty"))
+                    if(host.timeline[i]!=null)
                     {
-                        host.timeline[j]=null;
-                        empty=true;
+                        if(Objects.equals(host.timeline[j].name, "empty") && host.timeline[j].cardReference==null)
+                        {
+                            host.timeline[j]=null;
+                            empty=true;
+                        }
                     }
                 }
                 empty=false;
@@ -43,7 +66,7 @@ public class CardsController {
                 {
                     if(host.timeline[a]==null)
                     {
-                        host.timeline[a]=new Card("empty",0,1,0,1,0,null,null);
+                        host.timeline[a]=new Card(null);
                         empty=true;
                     }
                     a=random.nextInt(10);
@@ -55,10 +78,13 @@ public class CardsController {
                 a=random.nextInt(10);
                 for (int j=0;j<10 && !empty;j++)
                 {
-                    if(Objects.equals(guest.timeline[j].name, "empty"))
+                    if(guest.timeline[j]!=null)
                     {
-                        guest.timeline[j]=null;
-                        empty=true;
+                        if(Objects.equals(guest.timeline[j].name, "empty") && host.timeline[j].cardReference==null)
+                        {
+                            guest.timeline[j]=null;
+                            empty=true;
+                        }
                     }
                 }
                 empty=false;
@@ -66,7 +92,7 @@ public class CardsController {
                 {
                     if(guest.timeline[a]==null)
                     {
-                        guest.timeline[a]=new Card("empty",0,1,0,1,0,null,null);
+                        guest.timeline[a]=new Card(null);
                         empty=true;
                     }
                     a=random.nextInt(10);
@@ -102,10 +128,16 @@ public class CardsController {
             {
                 if(guest.timeline[a]!=null)
                 {
-                    guest.timeline[a].playerDamage=(int) (guest.timeline[a].playerDamage*0.6);
-                    empty=false;
+                    if(!Objects.equals(guest.timeline[a].name, "empty"))
+                    {
+                        for(int j=0;j<guest.timeline[a].Duration;j++)
+                        {
+                            guest.timeline[a+j].playerDamage=(int) (guest.timeline[a+j].playerDamage*0.6);
+                            empty=false;
+                        }
+                    }
                 }
-                else
+                if(empty)
                 {
                     a=random.nextInt(10);
                 }
@@ -116,17 +148,19 @@ public class CardsController {
             {
                 if(a!=b)
                 {
-                    if(guest.timeline[a]!=null)
+                    if(guest.timeline[b]!=null)
                     {
-                        guest.timeline[a].defence_attack=(int) (guest.timeline[a].defence_attack*0.6);
-                        empty=false;
-                    }
-                    else
-                    {
-                        a=random.nextInt(10);
+                        if(!Objects.equals(guest.timeline[b].name, "empty"))
+                        {
+                            for (int j=0;j<guest.timeline[b].Duration;j++)
+                            {
+                                guest.timeline[b+j].defence_attack=(int) (guest.timeline[b+j].defence_attack*0.6);
+                                empty=false;
+                            }
+                        }
                     }
                 }
-                else
+                if(empty)
                 {
                     b=random.nextInt(10);
                 }

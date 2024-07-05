@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 public class Game {
     public static User Host,Guest;
     private static Scanner input = new Scanner(System.in);
-    public static int run() throws NoUserException, PasswordExeption {
+    public static int run()  {
         String in;
         boolean quit = false;
         Host= Users.LoginUser;
@@ -23,7 +23,13 @@ public class Game {
         Matcher showcurrrentmenu;
         Matcher exit;
         System.out.println("add user Guest\n");
-        initGuest();
+        try {
+            initGuest();
+        }
+        catch (Exception e)
+        {
+
+        }
 //        while (!quit){
 //            in = input.nextLine();
 //            showinformation = Misc.getMatcher(in,"^Show(\\s+)information(\\s*)$");
