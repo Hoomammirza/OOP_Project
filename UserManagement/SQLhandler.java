@@ -36,6 +36,17 @@ public class SQLhandler {
         } catch (SQLException e){System.out.println(e);}
         return null;
     }
+    public static void updateUser(User user){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.executeUpdate("update user set Level = "+user.Level+",Coins = "+user.Coins+" where Username = '"+user.Username+"';");
+            }
+
+        } catch (SQLException e){System.out.println(e);}
+    }
     public static boolean Userexists(String username){
         ResultSet rs;
         Statement statement;
