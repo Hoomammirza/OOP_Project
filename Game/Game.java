@@ -75,16 +75,8 @@ public class Game {
             login = Misc.getMatcher(in, "^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
             if (login.find()) {
-                try {
-                    if (login(login.group("username"), login.group("password")))
-                        quit = true;
-                } catch (NoUserException e) {
-                    String s = e.toString();
-                    System.out.println("Username doesn't exist!");
-                } catch (PasswordExeption e) {
-                    String s = e.toString();
-                    System.out.println("Password and Username don’t match!");
-                }
+                if (login(login.group("username"), login.group("password")))
+                    quit = true;
             } else if (showcurrrentmenu.find()) {
                 System.out.println("Game menu: login");
             }
@@ -101,12 +93,33 @@ public class Game {
 
         while (!quit) {
             String in = input.nextLine();
-            selectCharacter = Misc.getMatcher(in, "^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
+            selectCharacter = Misc.getMatcher(in, "^select(\\s+)(?<character>\\S+)(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
             if (selectCharacter.find()) {
-
+                if (SelectCharacter(Host,selectCharacter))
+                    quit = true;
             } else if (showcurrrentmenu.find()) {
-                System.out.println("Game menu: login");
+                System.out.println("Game menu: Character Select");
+            }
+        }
+        //=================================================================================================================
+        System.out.println("Please select you character Player 2:\n" +
+                "Gunner , Fighter , Dancer , Wizard ");
+        quit = false;
+
+        System.out.println("commands:\n" +
+                "*  select <character>\n"
+                + "*  show current menu ");
+
+        while (!quit) {
+            String in = input.nextLine();
+            selectCharacter = Misc.getMatcher(in, "^select(\\s+)(?<character>\\S+)(\\s*)$");
+            showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
+            if (selectCharacter.find()) {
+                if (SelectCharacter(Host,selectCharacter))
+                    quit = true;
+            } else if (showcurrrentmenu.find()) {
+                System.out.println("Game menu: Character Select");
             }
         }
 
@@ -127,5 +140,26 @@ public class Game {
     }
     public static void timelineInputOutput(User Host,User Guest){
 
+    }
+    public static boolean SelectCharacter(User user,Matcher matcher){
+        String character = matcher.group("character");
+        switch (character){
+            case "Gunner":
+                user.character = User.Character.valueOf(character);
+                break;
+            case "Fighter":
+                user.character = User.Character.valueOf(character);
+                break;
+            case "Dancer":
+                user.character = User.Character.valueOf(character);
+                break;
+            case "Wizard":
+                user.character = User.Character.valueOf(character);
+                break;
+            case "Default":
+                System.out.println("invalid character name!");
+                return false;
+        }
+        return true;
     }
 }

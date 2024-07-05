@@ -47,6 +47,7 @@ public class User {
     //Game=====================================================================================================
 
     public int hitpoint;
+    public Character character;
     public boolean become4CardInHand=false;
     public boolean become6CardInHand=false;
     public boolean become6CardInHandOneTime=false;
