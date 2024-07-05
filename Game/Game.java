@@ -61,35 +61,71 @@ public class Game {
 //        }
         return 0;
     }
-    public static void initGuest() throws NoUserException, PasswordExeption {
-        boolean quit=false;
+    public static void initGuest() {
+        boolean quit = false;
         Matcher login;
         Matcher showcurrrentmenu;
 
         System.out.println("commands:\n" +
                 "*  user login -u <username> -p <password>\n"
-        +       "*  show current menu ");
+                + "*  show current menu ");
 
-        while (!quit){
+        while (!quit) {
             String in = input.nextLine();
-            login = Misc.getMatcher(in,"^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
+            login = Misc.getMatcher(in, "^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
-            if (login.find()){
-                login(login.group("username"),login.group("password"));
-            }
-            else if(showcurrrentmenu.find())
-            {
-                System.out.println("Gamemenu: login");
+            if (login.find()) {
+                try {
+                    if (login(login.group("username"), login.group("password")))
+                        quit = true;
+                } catch (NoUserException e) {
+                    String s = e.toString();
+                    System.out.println("Username doesn't exist!");
+                } catch (PasswordExeption e) {
+                    String s = e.toString();
+                    System.out.println("Password and Username don’t match!");
+                }
+            } else if (showcurrrentmenu.find()) {
+                System.out.println("Game menu: login");
             }
         }
+        //=================================================================================================================
+        System.out.println("Please select you character Player 1:\n" +
+                "Gunner , Fighter , Dancer , Wizard ");
+        quit = false;
+        Matcher selectCharacter;
+
+        System.out.println("commands:\n" +
+                "*  select <character>\n"
+                + "*  show current menu ");
+
+        while (!quit) {
+            String in = input.nextLine();
+            selectCharacter = Misc.getMatcher(in, "^user(\\s+)login(\\s+)-u(\\s+)(?<username>\\S+)(\\s+)-p(\\s+)(?<password>\\S+)(\\s*)$");
+            showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
+            if (selectCharacter.find()) {
+
+            } else if (showcurrrentmenu.find()) {
+                System.out.println("Game menu: login");
+            }
+        }
+
     }
-    private static void login(String username,String password) throws NoUserException, PasswordExeption{
+    private static boolean login(String username,String password){
         try {
             User user = SQLhandler.readUser(username,password);
             Guest=user;
+            return true;
+        } catch (NoUserException e) {
+            String s = e.toString();
+            System.out.println("Username doesn't exist!");
+        } catch (PasswordExeption e) {
+            String s = e.toString();
+            System.out.println("Password and Username don’t match!");
         }
-        catch (NoUserException | PasswordExeption e){
-            throw e;
-        }
+        return false;
+    }
+    public static void timelineInputOutput(User Host,User Guest){
+
     }
 }
