@@ -28,7 +28,7 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"));
+                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP"));
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
@@ -42,7 +42,7 @@ public class SQLhandler {
         try {
             if (isConnected) {
                 statement = con.createStatement();
-                statement.executeUpdate("update user set Level = "+user.Level+",Coins = "+user.Coins+" where Username = '"+user.Username+"';");
+                statement.executeUpdate("update user set Level = "+user.Level+",Coins = "+user.Coins+",XP = "+user.XP+" where Username = '"+user.Username+"';");
             }
 
         } catch (SQLException e){System.out.println(e);}
@@ -276,6 +276,4 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return 0;
     }
-
-
 }

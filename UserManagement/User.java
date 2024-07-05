@@ -18,6 +18,7 @@ public class User {
     public int Level = 1;
     public int maxHP = 100;
     public int Coins = 100;
+    public int XP = 0;
     public boolean isAdmin = false;
     public ArrayList<Card> cards;
     public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA,boolean isAdmin){
@@ -29,7 +30,7 @@ public class User {
         this.SecurityQA = SecurityQA;
         this.isAdmin = isAdmin;
     }
-    public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA,boolean isAdmin,int Level,int Coins){
+    public  User(String Username,String Password,String Nickname,String Email,String SecurityQ,String SecurityQA,boolean isAdmin,int Level,int Coins,int XP){
         this.Username = Username;
         this.Password = Password;
         this.Nickname = Nickname;
@@ -39,6 +40,7 @@ public class User {
         this.isAdmin = isAdmin;
         this.Level = Level;
         this.Coins = Coins;
+        this.XP = XP;
     }
 
 
