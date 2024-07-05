@@ -286,6 +286,21 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return cards;
     }
+    public static ArrayList<Card> getUsercardsnormal(User user){
+        ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"'and feature is null ;");
+                while (rs.next()) {
+                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }
     public static int updateCard(User user,  String name, int level){
         Statement statement;
         try {
@@ -296,5 +311,4 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return 0;
     }
-
 }
