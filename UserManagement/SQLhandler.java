@@ -1,7 +1,11 @@
 package UserManagement;
 
+import Cards.Card;
+import Game.AddCardException;
+
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class SQLhandler {
     public static boolean isConnected = false;
@@ -132,5 +136,124 @@ public class SQLhandler {
             }
         } catch (Exception e){System.out.println(e);}
     }
+    public static void giveCard (Card card, User user, int level) {
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                statement.execute("insert into usercard (Username,Name,level) values ('" + user.Username + "','" + card.name + "'," + level + ");");
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+    public static boolean existsCard(String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Name = '" + name + "';");
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return false;
+    }
+    public static Card getCard(String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Name = '" + name + "';");
+                if (rs.next()) {
+                    return new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1);
+                } else {
+                    return null;
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return null;
+    }
+    public static Card getCard(User user, String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Name = '" + name + "';");
+                if (rs.next()) {
+                    return new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),getCardlevel(user, name));
+                } else {
+                    return null;
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return null;
+    }
+    public static boolean hasCard(User user,  String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from usercard where Name = '" + name + "' and Username = '"+user.Username+"';");
+                if (rs.next()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return false;
+    }
+    public static int getCardlevel(User user,  String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from usercard where Name = '" + name + "' and Username = '"+user.Username+"';");
+                if (rs.next()) {
+                    return rs.getInt("level");
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return 0;
+    }
+    public static ArrayList<Card> getallcards(){
+        ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards ;");
+                while (rs.next()) {
+                    cards.add(new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }
+    public static int getCardlevel(User user,  String name){
+        ResultSet rs;
+        Statement statement;
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeUpdate("select * from usercard where Name = '" + name + "' and Username = '"+user.Username+"';");
+                if (rs.next()) {
+                    return rs.getInt("level");
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return 0;
+    }
+
 
 }

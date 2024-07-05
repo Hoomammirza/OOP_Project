@@ -4,6 +4,7 @@ package UserManagement;
 import Cards.Card;
 
 import javax.swing.*;
+import java.net.PortUnreachableException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,5 +42,11 @@ public class User {
         Father,
         Color,
         Pet;
+    }
+    public enum Character{
+        Gunner,
+        Fighter,
+        Dancer,
+        Wizard;
     }
 }
