@@ -2,7 +2,11 @@ package Cards;
 
 import UserManagement.User;
 
+import java.util.Objects;
+import java.util.Random;
+
 public class Card {
+    public boolean handBuff=false;
     public int Duration;
     public String name;
     public String feature;
@@ -63,5 +67,78 @@ public class Card {
         this.upgradeCost=card.upgradeLevel;
         this.level=card.level;
         this.character=card.character;
+    }
+    public Card(Card card,Boolean a)
+    {
+        this.name=card.name;
+        this.playerDamage=card.playerDamage;
+        this.Duration=card.Duration;
+        this.feature=card.feature;
+        this.cardReference=null;
+        this.defence_attack=card.defence_attack;
+        this.upgradeCost=card.upgradeCost;
+        this.level=card.level;
+        this.character=card.character;
+    }
+    public void buffInHand(User user)
+    {
+        Random random=new Random();
+        int a;
+        int b;
+        if(!handBuff)
+        {
+            if(user.character== User.Character.Dancer)
+            {
+                if(Objects.equals(this.character, "Dancer"))
+                {
+                    b=4;
+                    a=random.nextInt(b);
+                    if(a==0)
+                    {
+                        this.playerDamage=(int) (1.2*this.playerDamage);
+                        handBuff=true;
+                    }
+                }
+            }
+            else if(user.character==User.Character.Gunner)
+            {
+                if(Objects.equals(this.character,"Gunner"))
+                {
+                    b=6;
+                    a=random.nextInt(b);
+                    if(a==0)
+                    {
+                        this.playerDamage=(int) (1.2*this.playerDamage);
+                        handBuff=true;
+                    }
+                }
+            }
+            else if(user.character==User.Character.Fighter)
+            {
+                if(Objects.equals(this.character,"Fighter"))
+                {
+                    b=10;
+                    a=random.nextInt(b);
+                    if(a==0)
+                    {
+                        this.playerDamage=(int) (1.2*this.playerDamage);
+                        handBuff=true;
+                    }
+                }
+            }
+            else if(user.character==User.Character.Wizard)
+            {
+                if(Objects.equals(this.character,"Wizard"))
+                {
+                    b=8;
+                    a=random.nextInt(b);
+                    if(a==0)
+                    {
+                        this.playerDamage=(int) (1.2*this.playerDamage);
+                        handBuff=true;
+                    }
+                }
+            }
+        }
     }
 }

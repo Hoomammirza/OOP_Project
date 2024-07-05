@@ -86,6 +86,7 @@ public class GameController {
             }
             a=random.nextInt(user.comeInHound.size());
         }
+        answer.get(2).upgrade(user);
         return answer;
     }
     public static void getNewCardInHand(User user)
@@ -111,5 +112,6 @@ public class GameController {
             }
             a=random.nextInt(user.comeInHound.size());
         }
+        user.hand.get(2).upgrade(user);
     }
 }
