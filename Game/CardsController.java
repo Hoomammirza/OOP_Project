@@ -21,7 +21,7 @@ public class CardsController {
         else if(Objects.equals(feature,"randomBuff"))
         {
             Random random=new Random();
-            int a=random.nextInt(10);
+            int a=random.nextInt(21);
             boolean empty=true;
             while (empty)
             {
@@ -38,7 +38,7 @@ public class CardsController {
                 }
                 if(empty)
                 {
-                    a=random.nextInt(10);
+                    a=random.nextInt(21);
                 }
             }
         }
@@ -49,10 +49,10 @@ public class CardsController {
             if(a==0)
             {
                 Boolean empty=false;
-                a=random.nextInt(10);
-                for (int j=0;j<10 && !empty;j++)
+                a=random.nextInt(21);
+                for (int j=0;j<21 && !empty;j++)
                 {
-                    if(host.timeline[i]!=null)
+                    if(host.timeline[j]!=null)
                     {
                         if(Objects.equals(host.timeline[j].name, "empty") && host.timeline[j].cardReference==null)
                         {
@@ -69,14 +69,14 @@ public class CardsController {
                         host.timeline[a]=new Card(null);
                         empty=true;
                     }
-                    a=random.nextInt(10);
+                    a=random.nextInt(21);
                 }
             }
             else if(a==1)
             {
                 Boolean empty=false;
-                a=random.nextInt(10);
-                for (int j=0;j<10 && !empty;j++)
+                a=random.nextInt(21);
+                for (int j=0;j<21 && !empty;j++)
                 {
                     if(guest.timeline[j]!=null)
                     {
@@ -95,14 +95,14 @@ public class CardsController {
                         guest.timeline[a]=new Card(null);
                         empty=true;
                     }
-                    a=random.nextInt(10);
+                    a=random.nextInt(21);
                 }
             }
         }
         else if(Objects.equals(feature, "pairHole"))
         {
             Boolean empty=false;
-            for (int j=0;j<10 && !empty;j++)
+            for (int j=0;j<21 && !empty;j++)
             {
                 if(Objects.equals(host.timeline[j].name, "empty"))
                 {
@@ -128,7 +128,7 @@ public class CardsController {
         else if(Objects.equals(feature,"reducePowerOpponentCard"))
         {
             Random random=new Random();
-            int a=random.nextInt(10);
+            int a=random.nextInt(21);
             Boolean empty=true;
             while (empty)
             {
@@ -145,11 +145,11 @@ public class CardsController {
                 }
                 if(empty)
                 {
-                    a=random.nextInt(10);
+                    a=random.nextInt(21);
                 }
             }
             empty=true;
-            int b=random.nextInt(10);
+            int b=random.nextInt(21);
             while (empty)
             {
                 if(a!=b)
@@ -168,9 +168,77 @@ public class CardsController {
                 }
                 if(empty)
                 {
-                    b=random.nextInt(10);
+                    b=random.nextInt(21);
                 }
             }
+        }
+        else if(Objects.equals(feature, "hider"))
+        {
+            guest.visibleCard=false;
+            ArrayList<ArrayList<Integer>> duration=new ArrayList<ArrayList<Integer>>();
+            duration.add(new ArrayList<Integer>());
+            duration.add(new ArrayList<Integer>());
+            duration.add(new ArrayList<Integer>());
+            duration.add(new ArrayList<Integer>());
+            duration.add(new ArrayList<Integer>());
+            for(int j=0;j<21;j++)
+            {
+                if(guest.timeline[j]!=null)
+                {
+                    if(!Objects.equals(guest.timeline[j].name, "null"))
+                    {
+                        duration.get(guest.timeline[j].Duration).add(j);
+                    }
+                }
+            }
+            Random random=new Random();
+            int a=random.nextInt(5);
+            boolean change=false;
+            while (!change)
+            {
+                if(duration.get(a).size()>=2)
+                {
+                    int b=random.nextInt(duration.get(a).size());
+                    int c=random.nextInt(duration.get(a).size());
+                    while (b==c)
+                    {
+                        c=random.nextInt(duration.get(a).size());
+                    }
+                    Card card1=guest.timeline[duration.get(a).get(b)];
+                    Card card2=guest.timeline[duration.get(a).get(c)];
+                    for (int j=0;j<card1.Duration;j++)
+                    {
+                        guest.timeline[duration.get(a).get(b)+j]=null;
+                    }
+                    for (int j=0;j<card2.Duration;j++)
+                    {
+                        guest.timeline[duration.get(a).get(c)+j]=null;
+                    }
+                    guest.timeline[duration.get(a).get(c)]=card1;
+                    for(int j=1;j<card1.Duration;j++)
+                    {
+                        guest.timeline[duration.get(a).get(c)+j]=new Card(card1);
+                    }
+                    guest.timeline[duration.get(a).get(b)]=card2;
+                    for(int j=1;j<card1.Duration;j++)
+                    {
+                        guest.timeline[duration.get(a).get(b)+j]=new Card(card2);
+                    }
+                    change=true;
+                }
+                else
+                {
+                    a=random.nextInt(5);
+                }
+            }
+        }
+    }
+    public void featureDuplicator(User host,String feature,int n)
+    {
+        if(Objects.equals(feature, "duplicator"))
+        {
+            host.become6CardInHand=true;
+            host.hand.add(host.hand.get(n));
         }
     }
     public static boolean doActionNow(String name)
