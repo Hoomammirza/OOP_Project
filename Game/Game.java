@@ -139,7 +139,6 @@ public class Game {
         return false;
     }
     public static void timelineInputOutput(User Host,User Guest){
-
     }
     public static boolean SelectCharacter(User user,Matcher matcher){
         String character = matcher.group("character");
