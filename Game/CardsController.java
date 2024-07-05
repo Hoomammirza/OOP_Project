@@ -18,6 +18,10 @@ public class CardsController {
         {
             guest.hitpoint+=20;
         }
+        else if(Objects.equals(feature,"randomBuff"))
+        {
+
+        }
         else if(Objects.equals(feature,"changeHole"))
         {
             Random random=new Random();
