@@ -28,8 +28,7 @@ public class GameController {
     };
     public void nextphase(){
     }
-    public static void run(User host,User Guest)
-    {
+    public static void run(User host,User Guest) {
     }
     public static void setCardInGame(int n,int i)
     {

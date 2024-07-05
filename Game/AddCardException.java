@@ -5,5 +5,4 @@ public class AddCardException extends Exception{
     public AddCardException(String message){
         this.message = message;
     }
-
 }

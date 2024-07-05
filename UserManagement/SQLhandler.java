@@ -28,7 +28,9 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from user where Username = '"+username+"';");
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
-                        return new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP"));
+                        User user = new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP"));
+                        user.cards = getUsercards(user);
+                        return user;
                     }else throw new PasswordExeption();
                 } else throw new NoUserException();
             }
@@ -110,6 +112,9 @@ public class SQLhandler {
         try {
             statement = con.createStatement();
             statement.execute("insert into user (Username,Password,Nickname,Email,SecurityQ,SecurityQA,isAdmin) VALUES ('"+user.Username+"','"+user.Password+"','"+user.Nickname+"','"+user.Email+"','"+user.SecurityQ.toString()+"','"+user.SecurityQA+"','"+user.isAdmin+"');");
+            for (Card card:user.cards){
+                giveCard(card,user,1);
+            }
         }catch (Exception e){
             System.out.println(e);
         }
@@ -266,6 +271,21 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return cards;
     }
+    public static ArrayList<Card> getUsercardsspecial(User user){
+        ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"'and feature is not null ;");
+                while (rs.next()) {
+                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }
     public static int updateCard(User user,  String name, int level){
         Statement statement;
         try {
@@ -276,4 +296,5 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return 0;
     }
+
 }
