@@ -3,18 +3,34 @@ package Game;
 import Cards.Card;
 import UserManagement.User;
 
+import java.util.ArrayList;
+
 public  class TimelineController {
-    static User user;
-    public static void AddCard( int i,int n)
+    public static GameController gameController;
+    public static void doCard(User Host,User Guest,boolean roundFinish,int i)
     {
-        Card card=user.hand.get(n);
-        for (int j=0;j<card.Duration;j++)
+        if(roundFinish)
         {
-            user.timeline[i+j]=card;
+            CardsController.feature(Host.timeline[i].feature,Host,Guest,i,gameController.round);
+            reduceHitpoint(Host,Guest,i);
+        }
+        else
+        {
+            if(CardsController.doActionNow(Host.timeline[i].name))
+            {
+                CardsController.feature(Host.timeline[i].feature,Host,Guest,i,gameController.round);
+            }
         }
     }
-    public static void init(User user1)
+    public static void reduceHitpoint(User Host,User Guest,int i)
     {
-        user=user1;
+        if(Host.timeline[i].defence_attack>=Guest.timeline[i].defence_attack)
+        {
+            Guest.hitpoint-=Host.timeline[i].playerDamage;
+        }
+        else
+        {
+            Host.hitpoint-=Guest.timeline[i].playerDamage;
+        }
     }
 }

@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CardsController {
-    public void feature(String feature, User host, User guest, int i,int round)
+    public static void feature(String feature, User host, User guest, int i,int round)
     {
         if(Objects.equals(feature, "shield"))
         {
@@ -128,5 +128,13 @@ public class CardsController {
                 }
             }
         }
+    }
+    public static boolean doActionNow(String name)
+    {
+        if(Objects.equals(name,"") || Objects.equals(name,"") ||Objects.equals(name,"")|| Objects.equals(name,""))
+        {
+            return true;
+        }
+        return false;
     }
 }
