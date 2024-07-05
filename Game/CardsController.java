@@ -8,13 +8,9 @@ import java.util.Objects;
 import java.util.Random;
 
 public class CardsController {
-    public static void feature(String feature, User host, User guest, int i,int round)
+    public static void feature(String feature, User host, User guest,int round)
     {
-        if(Objects.equals(feature, "shield"))
-        {
-            guest.timeline[i].playerDamage=0;
-        }
-        else if(Objects.equals(feature,"healing"))
+        if(Objects.equals(feature,"healing"))
         {
             guest.hitpoint+=20;
         }
@@ -233,7 +229,14 @@ public class CardsController {
             }
         }
     }
-    public void featureDuplicator(User host,String feature,int n)
+    public static void featureShield(String feature,User guest,int i)
+    {
+        if(Objects.equals(feature, "shield"))
+        {
+            guest.timeline[i].playerDamage=0;
+        }
+    }
+    public static void featureDuplicator(User host,String feature,int n)
     {
         if(Objects.equals(feature, "duplicator"))
         {
@@ -243,7 +246,7 @@ public class CardsController {
     }
     public static boolean doActionNow(String name)
     {
-        if(Objects.equals(name,"Mover") || Objects.equals(name,"Scaffholding") ||Objects.equals(name,"Blackhole")|| Objects.equals(name,"Time God")||Objects.equals(name,"Poison pouch")||Objects.equals(name,"Duplicator")||Objects.equals(name,"Smoke bomb")||Objects.equals(name,"Strength poison")||Objects.equals(name,"shield"))
+        if(Objects.equals(name,"Healing")||Objects.equals(name,"changeHole") || Objects.equals(name,"pairHole") ||Objects.equals(name,"cardRemover")|| Objects.equals(name,"reduceRound")||Objects.equals(name,"reducePowerOpponentCard")||Objects.equals(name,"duplicator")||Objects.equals(name,"hider")||Objects.equals(name,"randomBuff")||Objects.equals(name,"shield"))
         {
             return true;
         }

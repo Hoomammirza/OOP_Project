@@ -6,20 +6,25 @@ import UserManagement.User;
 import java.util.ArrayList;
 
 public  class TimelineController {
-    public static GameController gameController;
-    public static void doCard(User Host,User Guest,boolean roundFinish,int i)
+    public static void doCard(User Host,User Guest,String feauture)
     {
-        if(roundFinish)
+        if(CardsController.doActionNow(feauture))
         {
-            CardsController.feature(Host.timeline[i].feature,Host,Guest,i,gameController.round);
-            reduceHitpoint(Host,Guest,i);
+            CardsController.feature(feauture,Host,Guest,GameController.round);
         }
-        else
+    }
+    public static void doCard(User Host,User Guest,int i)
+    {
+        if(CardsController.doActionNow(Host.timeline[i].feature))
         {
-            if(CardsController.doActionNow(Host.timeline[i].name))
-            {
-                CardsController.feature(Host.timeline[i].feature,Host,Guest,i,gameController.round);
-            }
+           CardsController.featureShield(Host.timeline[i].feature,Guest,i);
+        }
+    }
+    public static void doCard(User Host,User Guest,int n,String feature)
+    {
+        if(CardsController.doActionNow(feature))
+        {
+            CardsController.featureDuplicator(Host,feature,n);
         }
     }
     public static void reduceHitpoint(User Host,User Guest,int i)
@@ -32,5 +37,44 @@ public  class TimelineController {
         {
             Host.hitpoint-=Guest.timeline[i].playerDamage;
         }
+    }
+    public static void setCardInGameWithSpace(User host,User Guest,int n,int i)
+    {
+        if(i+host.hand.get(n).Duration>=21)
+        {
+            System.out.println("out of bounds!");
+        }
+        else
+        {
+            boolean empty=true;
+            for(int j=i;j<i+host.hand.get(n).Duration && empty;j++)
+            {
+                if(host.timeline[j]!=null)
+                {
+                    empty=false;
+                }
+            }
+            if(empty)
+            {
+                host.timeline[i]=host.hand.get(n);
+                for(int j=i+1;j<i+host.hand.get(n).Duration && empty;j++)
+                {
+                    host.timeline[j]=new Card(host.timeline[i]);
+                }
+                doCard(host,Guest,i);
+            }
+            else
+            {
+                System.out.println("this cell is full!");
+            }
+        }
+    }
+    public static void setCardInGameWithNoSpace(User host,User Guest,int n)
+    {
+        TimelineController.doCard(host,Guest,host.hand.get(n).feature);
+    }
+    public static void SetDuplicator(User host,User Guest,int n,int i)
+    {
+        doCard(host,Guest,i,host.hand.get(n).feature);
     }
 }
