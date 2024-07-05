@@ -34,6 +34,9 @@ public class User {
     //Game=====================================================================================================
 
     public int hitpoint;
+    public boolean become4CardInHand=false;
+    public boolean become6CardInHand=false;
+    public boolean become6CardInHandOneTime=false;
     public ArrayList<Card> hand;
     public int gamescore;
     public boolean visibleCard=true;

@@ -1,5 +1,7 @@
 package Cards;
 
+import UserManagement.User;
+
 public class Card {
     public int Duration;
     public String name;
@@ -11,6 +13,31 @@ public class Card {
     public double upgradeCost;
     public int level = 1;
     String character;
+    public void upgrade(User user)
+    {
+        if(user.Coins>=this.upgradeCost && user.Level>=this.upgradeCost)
+        {
+            user.Coins-=(int) this.upgradeCost;
+            this.upgradeCost=1.25*this.upgradeCost;
+            this.level++;
+            if((this.defence_attack*1.2)<=100)
+            {
+                this.defence_attack=(int)(defence_attack*1.2);
+            }
+            else
+            {
+                this.defence_attack=100;
+            }
+            if((this.playerDamage*1.05)<=50)
+            {
+                this.playerDamage=(int)(defence_attack*1.05);
+            }
+            else
+            {
+                this.defence_attack=50;
+            }
+        }
+    }
 
     public Card(String name, int defence_attack, int Duration, int playerDamage, double upgradeCost, int upgradeLevel, String feature, String character,int level) {
         this.level=level;
