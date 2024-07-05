@@ -54,7 +54,7 @@ public class User {
     public ArrayList<Card> hand;
     public int gamescore;
     public boolean visibleCard=true;
-    public Card[] timeline = new Card[10];
+    public Card[] timeline = new Card[21];
     public enum securityQ{
         Father,
         Color,
