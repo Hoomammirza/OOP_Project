@@ -38,55 +38,60 @@ public  class TimelineController {
     }
     public static boolean setCardInGameWithSpace(User host,User Guest,int n,int i)
     {
-        if(host.hand.size()>n)
-        {
-            if(i+host.hand.get(n).Duration>=21)
+
+            if(host.hand.size()>n)
             {
-                System.out.println("out of bounds!");
-            }
-            else
-            {
-                boolean empty=true;
-                for(int j=i;j<i+host.hand.get(n).Duration && empty;j++)
-                {
-                    if(host.timeline[j]!=null)
-                    {
-                        empty=false;
+                if(host.hand.get(n).Duration!=0) {
+                    if (i + host.hand.get(n).Duration >= 21) {
+                        System.out.println("out of bounds!");
+                    } else {
+                        boolean empty = true;
+                        for (int j = i; j < i + host.hand.get(n).Duration && empty; j++) {
+                            if (host.timeline[j] != null) {
+                                empty = false;
+                            }
+                        }
+                        if (empty) {
+                            host.timeline[i] = host.hand.get(n);
+                            host.timeline[i].upgrade(host);
+                            for (int j = i + 1; j < i + host.hand.get(n).Duration && empty; j++) {
+                                host.timeline[j] = new Card(host.timeline[i]);
+                            }
+                            doCard(host, Guest, i);
+                            cardVsCard(host, Guest, i);
+                            host.cards.remove(n);
+                            return true;
+                        } else {
+                            System.out.println("this cell is full!");
+                        }
+
                     }
-                }
-                if(empty)
-                {
-                    host.timeline[i]=host.hand.get(n);
-                    host.timeline[i].upgrade(host);
-                    for(int j=i+1;j<i+host.hand.get(n).Duration && empty;j++)
-                    {
-                        host.timeline[j]=new Card(host.timeline[i]);
-                    }
-                    doCard(host,Guest,i);
-                    cardVsCard(host,Guest,i);
-                    host.cards.remove(n);
-                    return true;
                 }
                 else
                 {
-                    System.out.println("this cell is full!");
+                    System.out.println("this card has no Duration");
                 }
-
             }
-        }
-        else
-        {
-            System.out.println("out of hand bounds");
-        }
+            else
+            {
+                System.out.println("out of hand bounds");
+            }
         return false;
     }
     public static boolean setCardInGameWithNoSpace(User host,User Guest,int n)
     {
         if(host.hand.size()>n)
         {
-            TimelineController.doCard(host,Guest,host.hand.get(n).feature);
-            host.cards.remove(n);
-            return true;
+            if(host.hand.get(n).Duration==0)
+            {
+                TimelineController.doCard(host,Guest,host.hand.get(n).feature);
+                host.cards.remove(n);
+                return true;
+            }
+            else
+            {
+                System.out.println("this Card have Duration");
+            }
         }
         else
         {
@@ -98,9 +103,16 @@ public  class TimelineController {
     {
         if(host.hand.size()>n)
         {
-            doCard(host,Guest,i,host.hand.get(n).feature);
-            host.cards.remove(n);
-            return true;
+            if(host.hand.get(n).Duration==0)
+            {
+                doCard(host,Guest,i,host.hand.get(n).feature);
+                host.cards.remove(n);
+                return true;
+            }
+            else
+            {
+                System.out.println("this Card have Duration");
+            }
         }
         else
         {
