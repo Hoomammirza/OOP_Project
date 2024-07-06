@@ -159,7 +159,7 @@ public class signup {
             }else if (signup.find()){
                 if(signup(signup))
                 {
-                    return 4;
+                    return 1;
                 }
             }else if (back.find()){
                 return 1;
@@ -236,7 +236,7 @@ public class signup {
                                     for (int i = 0; i < captcha.length(); i++) {
                                         Random random = new Random(System.currentTimeMillis());
                                         for (int j = 0; j < 40; j++) {
-                                            int k = random.nextInt(captcha.length()*(12) - 3);
+                                            int k = random.nextInt(captcha.length()*(12) - 4);
                                             int m = random.nextInt(8);
                                             captchashow.set(m,captchashow.get(m).substring(0,k)+'A'+captchashow.get(m).substring(k+1));
                                         }

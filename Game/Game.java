@@ -16,6 +16,7 @@ public class Game {
         return 4;
     }
     public static void initGuest() {
+        Host = Users.LoginUser;
         boolean quit = false;
         Matcher login;
         Matcher showcurrrentmenu;
@@ -70,7 +71,7 @@ public class Game {
             selectCharacter = Misc.getMatcher(in, "^select(\\s+)(?<character>\\S+)(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
             if (selectCharacter.find()) {
-                if (SelectCharacter(Host,selectCharacter))
+                if (SelectCharacter(Guest,selectCharacter))
                     quit = true;
             } else if (showcurrrentmenu.find()) {
                 System.out.println("Game menu: Character Select");
@@ -115,9 +116,9 @@ public class Game {
             }
             else if(showCardInformation.find())
             {
-                int n=Integer.parseInt(selectCardWithSpace.group("n"));
+                int n=Integer.parseInt(showCardInformation.group("n"));
                 String x=showCardInformation.group("x");
-                showGameInformation(Host,Guest);
+                showInformationCard(Host,Guest,n,x);
             }
             else if(selectCardWithSpace.find())
             {
@@ -295,9 +296,9 @@ public class Game {
             else
             {
                 c+="damage/healing card  ";
-                c+="Duration:  "+host.hand.get(i).Duration+"  ";
-                c+="player Damage:  "+host.hand.get(i).playerDamage+"  ";
-                c+="attack defence point:  "+host.hand.get(i).defence_attack;
+                c+="Duration:  "+guest.hand.get(i).Duration+"  ";
+                c+="player Damage:  "+guest.hand.get(i).playerDamage+"  ";
+                c+="attack defence point:  "+guest.hand.get(i).defence_attack;
             }
             System.out.println(c);
         }
@@ -345,9 +346,9 @@ public class Game {
                 else
                 {
                     c+="damage/healing card  ";
-                    c+="Duration:  "+host.hand.get(n).Duration+"  ";
-                    c+="player Damage:  "+host.hand.get(n).playerDamage+"  ";
-                    c+="attack defence point:  "+host.hand.get(n).defence_attack;
+                    c+="Duration:  "+guest.hand.get(n).Duration+"  ";
+                    c+="player Damage:  "+guest.hand.get(n).playerDamage+"  ";
+                    c+="attack defence point:  "+guest.hand.get(n).defence_attack;
                 }
                 System.out.println(c);
             }

@@ -1,10 +1,6 @@
 package UserManagement;
 
 import Cards.Card;
-import Game.AddCardException;
-import com.mysql.cj.PreparedQuery;
-
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -113,7 +109,7 @@ public class SQLhandler {
         Statement statement;
         try {
             statement = con.createStatement();
-            statement.execute("insert into user (Username,Password,Nickname,Email,SecurityQ,SecurityQA,isAdmin) VALUES ('"+user.Username+"','"+user.Password+"','"+user.Nickname+"','"+user.Email+"','"+user.SecurityQ.toString()+"','"+user.SecurityQA+"','"+user.isAdmin+"');");
+            statement.execute("insert into user (Username,Password,Nickname,Email,SecurityQ,SecurityQA,isAdmin,Coins,Level,XP) VALUES ('"+user.Username+"','"+user.Password+"','"+user.Nickname+"','"+user.Email+"','"+user.SecurityQ.toString()+"','"+user.SecurityQA+"',"+0+",100,1,0);");
             for (Card card:user.cards){
                 giveCard(card,user,1);
             }
@@ -266,7 +262,7 @@ public class SQLhandler {
                 statement = con.createStatement();
                 rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
                 while (rs.next()) {
-                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                    cards.add(getCard(user,rs.getString("Name")));
                 }
             }
         } catch (Exception e){System.out.println(e);}
@@ -279,9 +275,11 @@ public class SQLhandler {
         try {
             if (isConnected) {
                 statement = con.createStatement();
-                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"'and feature is not null ;");
+                rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
                 while (rs.next()) {
-                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                    Card card = getCard(user,rs.getString("Name"));
+                    if (card.feature != null)
+                        cards.add(getCard(user,rs.getString("Name")));
                 }
             }
         } catch (Exception e){System.out.println(e);}
@@ -294,9 +292,11 @@ public class SQLhandler {
         try {
             if (isConnected) {
                 statement = con.createStatement();
-                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"'and feature is null ;");
+                rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
                 while (rs.next()) {
-                    cards.add(getCard(user,rs.getString(rs.getString("Name"))));
+                    Card card = getCard(user,rs.getString("Name"));
+                    if (card.feature == null)
+                        cards.add(getCard(user,rs.getString("Name")));
                 }
             }
         } catch (Exception e){System.out.println(e);}

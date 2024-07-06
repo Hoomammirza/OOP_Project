@@ -38,7 +38,6 @@ public  class TimelineController {
     }
     public static boolean setCardInGameWithSpace(User host,User Guest,int n,int i)
     {
-
             if(host.hand.size()>n)
             {
                 if(host.hand.get(n).Duration!=0) {
@@ -59,7 +58,7 @@ public  class TimelineController {
                             }
                             doCard(host, Guest, i);
                             cardVsCard(host, Guest, i);
-                            host.cards.remove(n);
+                            host.hand.remove(n);
                             return true;
                         } else {
                             System.out.println("this cell is full!");
@@ -85,7 +84,7 @@ public  class TimelineController {
             if(host.hand.get(n).Duration==0)
             {
                 TimelineController.doCard(host,Guest,host.hand.get(n).feature);
-                host.cards.remove(n);
+                host.hand.remove(n);
                 return true;
             }
             else
@@ -110,7 +109,7 @@ public  class TimelineController {
                     if(host.hand.size()>i)
                     {
                         doCard(host,Guest,i,host.hand.get(n).feature);
-                        host.cards.remove(n);
+                        host.hand.remove(n);
                         return true;
                     }
                     else
@@ -142,7 +141,7 @@ public  class TimelineController {
             {
                 if(host.timeline[i].defence_attack>Guest.timeline[i].defence_attack)
                 {
-                    for (int j=0;j<host.timeline[j].Duration;j++)
+                    for (int j=0;j<host.timeline[i].Duration;j++)
                     {
                         if(Guest.timeline[i+j]!=null)
                         {
@@ -153,7 +152,7 @@ public  class TimelineController {
                 }
                 else if(host.timeline[i].defence_attack==Guest.timeline[i].defence_attack)
                 {
-                    for (int j=0;j<host.timeline[j].Duration;j++) {
+                    for (int j=0;j<host.timeline[i].Duration;j++) {
                         if (Guest.timeline[i + j] != null) {
                             host.timeline[i+j].playerDamage=0;
                             Guest.timeline[i+j].playerDamage=0;
@@ -162,7 +161,7 @@ public  class TimelineController {
                 }
                 else if(Guest.timeline[i].defence_attack>host.timeline[i].defence_attack)
                 {
-                    for (int j=0;j<host.timeline[j].Duration;j++) {
+                    for (int j=0;j<host.timeline[i].Duration;j++) {
                         if (Guest.timeline[i + j] != null) {
                             host.timeline[i+j].playerDamage=0;
                         }
@@ -171,7 +170,7 @@ public  class TimelineController {
             }
             else
             {
-                for (int j=0;j<host.timeline[j].Duration;j++)
+                for (int j=0;j<host.timeline[i].Duration;j++)
                 {
                     if(Guest.timeline[i+j]!=null)
                     {

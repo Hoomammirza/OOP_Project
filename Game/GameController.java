@@ -31,6 +31,7 @@ public class GameController {
     public void nextphase(){
     }
     public static void run(User host,User Guest) {
+        round = 4;
         host1=host;
         quest1=Guest;
         host1.maxHP=User.getMaxHp(host1.Level);
@@ -147,6 +148,8 @@ public class GameController {
             c=guest.maxHP-guest.hitpoint;
             System.out.println("user guest: "+guest.Nickname+"  damage:  "+c+"  HitPoint guest:  "+guest.hitpoint);
             System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
+            host.hitpoint -= guest.timeline[i].playerDamage;
+            guest.hitpoint -= host.timeline[i].playerDamage;
             if(host.hitpoint<=0 || guest.hitpoint<=0)
             {
                 finish=true;
