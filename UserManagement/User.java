@@ -61,6 +61,29 @@ public class User {
         Color,
         Pet;
     }
+    public static int getMaxHp(int level)
+    {
+        int MaxHp=(int) (150*Math.sqrt(1.1*level));
+        return MaxHp;
+    }
+    public static int updateLevel(int level,int Xp)
+    {
+        while (Xp>=150*level*level)
+        {
+            Xp-=150*level*level;
+            level++;
+        }
+        return level;
+    }
+    public static int updateXp(int level,int Xp)
+    {
+        while (Xp>=150*level*level)
+        {
+            Xp-=150*level*level;
+            level++;
+        }
+        return Xp;
+    }
     public enum Character{
         Gunner,
         Fighter,

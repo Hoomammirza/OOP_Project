@@ -7,6 +7,7 @@ import UserManagement.User;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class GameController {
     static public User host1;
@@ -32,6 +33,10 @@ public class GameController {
     public static void run(User host,User Guest) {
         host1=host;
         quest1=Guest;
+        host1.maxHP=User.getMaxHp(host1.Level);
+        quest1.maxHP=User.getMaxHp(quest1.Level);
+        host1.hitpoint=host1.maxHP;
+        quest1.hitpoint=quest1.maxHP;
         while (!finish)
         {
             host1.comeInHound=new ArrayList<ArrayList<String>>();
@@ -58,6 +63,8 @@ public class GameController {
             endRound(host1,quest1);
         }
         endGame(host1,quest1);
+        SQLhandler.updateUser(host1);
+        SQLhandler.updateUser(quest1);
     }
     public static ArrayList<Card> get5CardHand(User user)
     {
@@ -134,9 +141,11 @@ public class GameController {
         {
             int a=i+1;
             TimelineController.cardVsCard(host,guest,i);
-            System.out.println("user host: "+host.Nickname+"  HitPoint host:  "+host.hitpoint);
+            int c=host.maxHP-host.hitpoint;
+            System.out.println("user host: "+host.Nickname+"  damage:  "+c+"  HitPoint host:  "+host.hitpoint);
             System.out.println("card host block["+a+"] name:  "+host.timeline[i].name+"  card damage:  "+host.timeline[i].playerDamage);
-            System.out.println("user guest: "+guest.Nickname+"  HitPoint guest:  "+guest.hitpoint);
+            c=guest.maxHP-guest.hitpoint;
+            System.out.println("user guest: "+guest.Nickname+"  damage:  "+c+"  HitPoint guest:  "+guest.hitpoint);
             System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
             if(host.hitpoint<=0 || guest.hitpoint<=0)
             {
@@ -177,6 +186,14 @@ public class GameController {
             System.out.println("user"+host.Nickname+" experience increase 5 ");
             host.XP+=5;
         }
+        int perviousXpHost=host.XP;
+        int perviousXpGuest=guest.XP;
+        int perviousLevelHost=host.Level;
+        int perviousLevelGuest=guest.Level;
+        host.Level=User.updateLevel(perviousLevelHost,perviousXpHost);
+        guest.Level=User.updateLevel(perviousLevelGuest,perviousXpGuest);
+        host.XP=User.updateXp(perviousLevelHost,perviousXpHost);
+        guest.XP=User.updateXp(perviousLevelGuest,perviousXpGuest);
         finish=false;
     }
 }

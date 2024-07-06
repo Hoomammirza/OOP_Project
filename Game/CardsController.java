@@ -109,7 +109,7 @@ public class CardsController {
         }
         else if(Objects.equals(feature,"reduceRound"))
         {
-            round--;
+            GameController.round--;
         }
         else if(Objects.equals(feature,"removeCardFromHand"))
         {
