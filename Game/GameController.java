@@ -112,6 +112,9 @@ public class GameController {
             }
             a=random.nextInt(user.comeInHound.size());
         }
-        user.hand.get(2).upgrade(user);
+        if(user.hand.size()%2==1)
+        {
+            user.hand.get(2).upgrade(user);
+        }
     }
 }
