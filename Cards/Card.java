@@ -7,16 +7,16 @@ import java.util.Random;
 
 public class Card {
     public boolean handBuff=false;
-    public int Duration;
-    public String name;
-    public String feature;
-    public Card cardReference;
-    public int defence_attack;
-    public int playerDamage;
-    public int upgradeLevel;
-    public double upgradeCost;
+    public int Duration=0;
+    public String name=null;
+    public String feature=null;
+    public Card cardReference=null;
+    public int defence_attack=0;
+    public int playerDamage=0;
+    public int upgradeLevel=0;
+    public double upgradeCost=0;
     public int level = 1;
-    String character;
+    String character=null;
     public void upgrade(User user)
     {
         if(user.Coins>=this.upgradeCost && user.Level>=this.upgradeCost)

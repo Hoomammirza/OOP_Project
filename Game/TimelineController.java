@@ -105,9 +105,23 @@ public  class TimelineController {
         {
             if(host.hand.get(n).Duration==0)
             {
-                doCard(host,Guest,i,host.hand.get(n).feature);
-                host.cards.remove(n);
-                return true;
+                if(Objects.equals(host.hand.get(n).feature, "duplicator"))
+                {
+                    if(host.hand.size()>i)
+                    {
+                        doCard(host,Guest,i,host.hand.get(n).feature);
+                        host.cards.remove(n);
+                        return true;
+                    }
+                    else
+                    {
+                        System.out.println("out of bounds");
+                    }
+                }
+                else
+                {
+                    System.out.println("this card is not duplicator");
+                }
             }
             else
             {
