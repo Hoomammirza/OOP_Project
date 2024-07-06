@@ -141,4 +141,35 @@ public class Card {
             }
         }
     }
+    public void upgradeCharacter(User user)
+    {
+        if(user.character== User.Character.Dancer)
+        {
+            if(Objects.equals(this.character, "Dancer"))
+            {
+                this.playerDamage=(int) (this.playerDamage*1.1);
+            }
+        }
+        else if(user.character==User.Character.Gunner)
+        {
+            if(Objects.equals(this.character,"Gunner"))
+            {
+                this.playerDamage=(int) (this.playerDamage*1.1);
+            }
+        }
+        else if(user.character==User.Character.Fighter)
+        {
+            if(Objects.equals(this.character,"Fighter"))
+            {
+                this.playerDamage=(int) (this.playerDamage*1.1);
+            }
+        }
+        else if(user.character==User.Character.Wizard)
+        {
+            if(Objects.equals(this.character,"Wizard"))
+            {
+                this.playerDamage=(int) (this.playerDamage*1.1);
+            }
+        }
+    }
 }

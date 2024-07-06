@@ -33,6 +33,8 @@ public  class TimelineController {
     }
     public static void reduceHitpoint(User Host,User Guest,int i)
     {
+        Host.hitpoint-=Host.timeline[i].playerDamage;
+        Guest.hitpoint-=Guest.timeline[i].playerDamage;
     }
     public static void setCardInGameWithSpace(User host,User Guest,int n,int i)
     {
@@ -55,6 +57,7 @@ public  class TimelineController {
                 if(empty)
                 {
                     host.timeline[i]=host.hand.get(n);
+                    host.timeline[i].upgrade(host);
                     for(int j=i+1;j<i+host.hand.get(n).Duration && empty;j++)
                     {
                         host.timeline[j]=new Card(host.timeline[i]);

@@ -13,6 +13,7 @@ public class GameController {
     static public User quest1;
     static public int round;
     static boolean roundFinish;
+    static boolean finish;
     public boolean UsersReady = false;
     public void initusers() throws NoUserException,PasswordExeption{
         try {
@@ -54,6 +55,8 @@ public class GameController {
                     quest1.become6CardInHandOneTime=false;
                 }
             }
+            attackUser(host1,quest1);
+            endRound(host1,quest1);
         }
     }
     public static ArrayList<Card> get5CardHand(User user)
@@ -94,7 +97,7 @@ public class GameController {
             }
             a=random.nextInt(user.comeInHound.size());
         }
-        answer.get(2).upgrade(user);
+        answer.get(2).buffInHand(user);
         return answer;
     }
     public static void getNewCardInHand(User user)
@@ -122,7 +125,32 @@ public class GameController {
         }
         if(user.hand.size()%2==1)
         {
-            user.hand.get(2).upgrade(user);
+            user.hand.get(2).buffInHand(user);
         }
+    }
+    public static void attackUser(User host,User guest)
+    {
+        for (int i=0;i<21 && !finish;i++)
+        {
+            int a=i+1;
+            TimelineController.cardVsCard(host,guest,i);
+            System.out.println("user host: "+host.Nickname+"  HitPoint host:  "+host.hitpoint);
+            System.out.println("card host block["+a+"] name:  "+host.timeline[i].name+"  card damage:  "+host.timeline[i].playerDamage);
+            System.out.println("user guest: "+guest.Nickname+"  HitPoint guest:  "+guest.hitpoint);
+            System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
+            if(host.hitpoint<=0 || guest.hitpoint<=0)
+            {
+                finish=true;
+            }
+        }
+    }
+    public static void endRound(User host,User guest)
+    {
+        host.become4CardInHand=false;
+        host.become6CardInHandOneTime=false;
+        host.become6CardInHand=false;
+        guest.become4CardInHand=false;
+        guest.become6CardInHandOneTime=false;
+        guest.become6CardInHand=false;
     }
 }
