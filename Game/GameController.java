@@ -12,8 +12,7 @@ public class GameController {
     static public User host1;
     static public User quest1;
     static public int round;
-    static boolean roundFinish;
-    static boolean finish;
+    static boolean finish=false;
     public boolean UsersReady = false;
     public void initusers() throws NoUserException,PasswordExeption{
         try {
@@ -33,10 +32,10 @@ public class GameController {
     public static void run(User host,User Guest) {
         host1=host;
         quest1=Guest;
-        host1.comeInHound=new ArrayList<ArrayList<String>>();
-        quest1.comeInHound=new ArrayList<ArrayList<String>>();
-        while (host1.hitpoint<=0 || quest1.hitpoint<=0)
+        while (!finish)
         {
+            host1.comeInHound=new ArrayList<ArrayList<String>>();
+            quest1.comeInHound=new ArrayList<ArrayList<String>>();
             host1.hand=get5CardHand(host1);
             quest1.hand=get5CardHand(quest1);
             while (round>0)
@@ -58,6 +57,7 @@ public class GameController {
             attackUser(host1,quest1);
             endRound(host1,quest1);
         }
+        endGame(host1,quest1);
     }
     public static ArrayList<Card> get5CardHand(User user)
     {
@@ -152,5 +152,31 @@ public class GameController {
         guest.become4CardInHand=false;
         guest.become6CardInHandOneTime=false;
         guest.become6CardInHand=false;
+    }
+    public static void endGame(User host,User guest)
+    {
+        if(host.hitpoint>0)
+        {
+            System.out.println("user "+host.Nickname+" win!!");
+            System.out.println("user"+host.Nickname+" get 50 coin");
+            host.Coins+=50;
+            System.out.println("user"+host.Nickname+" experience increase 60 ");
+            host.XP+=60;
+            System.out.println("user "+guest.Nickname+" lose!!");
+            System.out.println("user"+guest.Nickname+" experience increase 5 ");
+            guest.XP+=5;
+        }
+        else if(guest.hitpoint>0)
+        {
+            System.out.println("user "+guest.Nickname+" win!!");
+            System.out.println("user"+guest.Nickname+" get 50 coin");
+            guest.Coins+=50;
+            System.out.println("user"+guest.Nickname+" experience increase 60 ");
+            guest.XP+=60;
+            System.out.println("user "+host.Nickname+" lose!!");
+            System.out.println("user"+host.Nickname+" experience increase 5 ");
+            host.XP+=5;
+        }
+        finish=false;
     }
 }
