@@ -55,6 +55,8 @@ public class MainMenu {
             else if(ProfileMenu.find())
             {
                 return 5;
+            }else if (HistoryGame.find()){
+                return 7;
             }
         }
         return 0;

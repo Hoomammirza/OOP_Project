@@ -2,6 +2,7 @@ package UserManagement;
 
 import Cards.Card;
 import Game.AddCardException;
+import com.mysql.cj.PreparedQuery;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -21,11 +22,13 @@ public class SQLhandler {
     }
     public static User readUser(String username,String password) throws PasswordExeption,NoUserException{
         ResultSet rs;
-        Statement statement;
+        PreparedStatement statement;
+
         try {
             if (isConnected) {
-                statement = con.createStatement();
-                rs = statement.executeQuery("select * from user where Username = '"+username+"';");
+                statement = con.prepareStatement("select * from user where Username = ?;");
+                statement.setString(1,username);
+                rs = statement.executeQuery();
                 if (rs.next()){
                     if (rs.getString("Password").equals(password)){
                         User user = new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP"));
@@ -39,7 +42,6 @@ public class SQLhandler {
         return null;
     }
     public static void updateUser(User user){
-        ResultSet rs;
         Statement statement;
         try {
             if (isConnected) {
@@ -126,7 +128,6 @@ public class SQLhandler {
             if (isConnected) {
                 statement = con.createStatement();
                 statement.executeUpdate("update user set Username = '"+Username+"' WHERE Username = '"+username+"';");
-
             }
         } catch (Exception e){System.out.println(e);}
     }
@@ -263,7 +264,7 @@ public class SQLhandler {
         try {
             if (isConnected) {
                 statement = con.createStatement();
-                rs = statement.executeQuery("select * from cards where Username = '"+user.Username+"';");
+                rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
                 while (rs.next()) {
                     cards.add(getCard(user,rs.getString(rs.getString("Name"))));
                 }
@@ -310,5 +311,42 @@ public class SQLhandler {
             }
         } catch (Exception e){System.out.println(e);}
         return 0;
+    }
+    public static ArrayList<Historyitem> getHistory(User user,String sort){
+        ResultSet rs;
+        Statement statement;
+
+        ArrayList<Historyitem> items = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from history where Host = '"+user.Username+"' ORDER BY "+sort+";");
+
+                while (rs.next()) {
+                    items.add(new Historyitem(rs.getString("Host"),rs.getString("Guest"),rs.getBoolean("Hostwin"),rs.getBoolean("Guestwin"),rs.getDate("Date"),rs.getTime("Time"),rs.getInt("Hostlevel"),rs.getInt("Guestlevel"),rs.getInt("Hostcoin"),rs.getInt("HostXP"),rs.getInt("GuestCoin"),rs.getInt("GuestXP")));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return items;
+    }
+    public static void setnewHistory(String Host,String Guest,boolean Hostwin,boolean Guestwin ,int Hostlevel,int Guestlevel,int HostCoin,int HostXP,int GuestCoin,int GuestXP){
+        try {
+            if (isConnected) {
+                PreparedStatement statement = con.prepareStatement("insert into history (Host,Guest,Hostwin,Guestwin,Date,Time,Hostlevel,Guestlevel,Hostcoin,HostXP,GuestCoin,GuestXP) values (?,?,?,?,?,?,?,?,?,?,?,?);");
+                statement.setString(1,Host);
+                statement.setString(2,Guest);
+                statement.setBoolean(3,Hostwin);
+                statement.setBoolean(4,Guestwin);
+                statement.setDate(5,new Date(new java.util.Date().getTime()));
+                statement.setTime(6,new Time(new java.util.Date().getTime()));
+                statement.setInt(7,Hostlevel);
+                statement.setInt(8,Guestlevel);
+                statement.setInt(9,HostCoin);
+                statement.setInt(10,HostXP);
+                statement.setInt(11,GuestCoin);
+                statement.setInt(12,GuestXP);
+                statement.execute();
+            }
+        } catch (Exception e){System.out.println(e);}
     }
 }

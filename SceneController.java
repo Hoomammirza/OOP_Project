@@ -29,6 +29,8 @@ public class SceneController {
                     break;
                 case 6:
                     n=Game.run();
+                case 7:
+                    n=History.run();
             }
         }
     }
