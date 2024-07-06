@@ -43,8 +43,15 @@ public class GameController {
                 Game.timelineInputOutput(host1,quest1);
                 Game.timelineInputOutput(quest1,host1);
                 round--;
-                getNewCardInHand(host1);
-                getNewCardInHand(quest1);
+                if(host1.hand.size()<6 || host1.become6CardInHand || host1.become6CardInHandOneTime)
+                {
+                    host1.become6CardInHandOneTime=false;
+                    getNewCardInHand(host1);
+                }
+                if(quest1.hand.size()<6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime)
+                {
+                    getNewCardInHand(quest1);
+                }
             }
         }
     }

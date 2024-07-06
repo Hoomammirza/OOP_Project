@@ -116,9 +116,12 @@ public class CardsController {
             Random random=new Random();
             int a=random.nextInt(5);
             Card card=guest.hand.get(a);
-            host.hand.add(card);
             guest.become4CardInHand=true;
-            guest.become6CardInHandOneTime=true;
+            if(host.hand.size()<6)
+            {
+                host.hand.add(card);
+                guest.become6CardInHandOneTime=true;
+            }
 
         }
         else if(Objects.equals(feature,"reducePowerOpponentCard"))
@@ -240,8 +243,11 @@ public class CardsController {
     {
         if(Objects.equals(feature, "duplicator"))
         {
-            host.become6CardInHand=true;
-            host.hand.add(host.hand.get(n));
+            if(host.hand.size()<6)
+            {
+                host.become6CardInHand=true;
+                host.hand.add(host.hand.get(n));
+            }
         }
     }
     public static boolean doActionNow(String name)
