@@ -36,7 +36,7 @@ public  class TimelineController {
         Host.hitpoint-=Host.timeline[i].playerDamage;
         Guest.hitpoint-=Guest.timeline[i].playerDamage;
     }
-    public static void setCardInGameWithSpace(User host,User Guest,int n,int i)
+    public static boolean setCardInGameWithSpace(User host,User Guest,int n,int i)
     {
         if(host.hand.size()>n)
         {
@@ -65,6 +65,7 @@ public  class TimelineController {
                     doCard(host,Guest,i);
                     cardVsCard(host,Guest,i);
                     host.cards.remove(n);
+                    return true;
                 }
                 else
                 {
@@ -77,30 +78,35 @@ public  class TimelineController {
         {
             System.out.println("out of hand bounds");
         }
+        return false;
     }
-    public static void setCardInGameWithNoSpace(User host,User Guest,int n)
+    public static boolean setCardInGameWithNoSpace(User host,User Guest,int n)
     {
         if(host.hand.size()>n)
         {
             TimelineController.doCard(host,Guest,host.hand.get(n).feature);
             host.cards.remove(n);
+            return true;
         }
         else
         {
             System.out.println("out of hand bounds");
         }
+        return false;
     }
-    public static void SetDuplicator(User host,User Guest,int n,int i)
+    public static boolean SetDuplicator(User host,User Guest,int n,int i)
     {
         if(host.hand.size()>n)
         {
             doCard(host,Guest,i,host.hand.get(n).feature);
             host.cards.remove(n);
+            return true;
         }
         else
         {
             System.out.println("out of hand bounds");
         }
+        return false;
     }
     public static void cardVsCard(User host,User Guest,int i)
     {
