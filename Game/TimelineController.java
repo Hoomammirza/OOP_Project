@@ -36,43 +36,68 @@ public  class TimelineController {
     }
     public static void setCardInGameWithSpace(User host,User Guest,int n,int i)
     {
-        if(i+host.hand.get(n).Duration>=21)
+        if(host.hand.size()>n)
         {
-            System.out.println("out of bounds!");
-        }
-        else
-        {
-            boolean empty=true;
-            for(int j=i;j<i+host.hand.get(n).Duration && empty;j++)
+            if(i+host.hand.get(n).Duration>=21)
             {
-                if(host.timeline[j]!=null)
-                {
-                    empty=false;
-                }
-            }
-            if(empty)
-            {
-                host.timeline[i]=host.hand.get(n);
-                for(int j=i+1;j<i+host.hand.get(n).Duration && empty;j++)
-                {
-                    host.timeline[j]=new Card(host.timeline[i]);
-                }
-                doCard(host,Guest,i);
-                cardVsCard(host,Guest,i);
+                System.out.println("out of bounds!");
             }
             else
             {
-                System.out.println("this cell is full!");
+                boolean empty=true;
+                for(int j=i;j<i+host.hand.get(n).Duration && empty;j++)
+                {
+                    if(host.timeline[j]!=null)
+                    {
+                        empty=false;
+                    }
+                }
+                if(empty)
+                {
+                    host.timeline[i]=host.hand.get(n);
+                    for(int j=i+1;j<i+host.hand.get(n).Duration && empty;j++)
+                    {
+                        host.timeline[j]=new Card(host.timeline[i]);
+                    }
+                    doCard(host,Guest,i);
+                    cardVsCard(host,Guest,i);
+                    host.cards.remove(n);
+                }
+                else
+                {
+                    System.out.println("this cell is full!");
+                }
+
             }
+        }
+        else
+        {
+            System.out.println("out of hand bounds");
         }
     }
     public static void setCardInGameWithNoSpace(User host,User Guest,int n)
     {
-        TimelineController.doCard(host,Guest,host.hand.get(n).feature);
+        if(host.hand.size()>n)
+        {
+            TimelineController.doCard(host,Guest,host.hand.get(n).feature);
+            host.cards.remove(n);
+        }
+        else
+        {
+            System.out.println("out of hand bounds");
+        }
     }
     public static void SetDuplicator(User host,User Guest,int n,int i)
     {
-        doCard(host,Guest,i,host.hand.get(n).feature);
+        if(host.hand.size()>n)
+        {
+            doCard(host,Guest,i,host.hand.get(n).feature);
+            host.cards.remove(n);
+        }
+        else
+        {
+            System.out.println("out of hand bounds");
+        }
     }
     public static void cardVsCard(User host,User Guest,int i)
     {

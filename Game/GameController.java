@@ -51,6 +51,7 @@ public class GameController {
                 if(quest1.hand.size()<6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime)
                 {
                     getNewCardInHand(quest1);
+                    quest1.become6CardInHandOneTime=false;
                 }
             }
         }
