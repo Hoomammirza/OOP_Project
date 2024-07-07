@@ -63,6 +63,7 @@ public class Card {
         this.cardReference=null;
         for(int i=0;i<level;i++)
         {
+            this.upgradeCost=1.25*this.upgradeCost;
             if((this.defence_attack*1.2)<=100)
             {
                 this.defence_attack=(int)(defence_attack*1.2);
