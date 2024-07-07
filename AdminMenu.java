@@ -198,6 +198,4 @@ public class AdminMenu {
             System.out.println("-"+(i+1)+"   "+user.Username+"   "+user.Level+"   "+user.Coins);
         }
     }
-
-
 }

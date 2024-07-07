@@ -100,10 +100,13 @@ public class CardsController {
             Boolean empty=false;
             for (int j=0;j<21 && !empty;j++)
             {
-                if(Objects.equals(host.timeline[j].name, "empty"))
+                if(host.timeline[j]!=null)
                 {
-                    host.timeline[j]=null;
-                    empty=true;
+                    if(Objects.equals(host.timeline[j].name, "empty"))
+                    {
+                        host.timeline[j]=null;
+                        empty=true;
+                    }
                 }
             }
         }
