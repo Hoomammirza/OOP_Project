@@ -100,16 +100,16 @@ public class Game {
         {
             System.out.println("command: \n"+
                     "show game information"+"\n"
-                    +"-Select card number <n> player <x>"+"\n"
-                    +"-Placing card number <n>"+"\n"
-                    +"-Placing card number <n> to copy <i>"+"\n"
-                    +"-Placing card number <n> in block <i>");
+                    +"-select card number <n> player <x>"+"\n"
+                    +"-placing card number <n>"+"\n"
+                    +"-placing card number <n> to copy <i>"+"\n"
+                    +"-placing card number <n> in block <i>");
             in=input.nextLine();
             Matcher showInformation=Misc.getMatcher(in, "show game information");
-            Matcher showCardInformation=Misc.getMatcher(in, "^Select card number (?<n>\\S+) player (?<x>\\S+)");
-            Matcher selectCardWithSpace=Misc.getMatcher(in, "^Placing card number (?<n>\\S+) in block (?<i>\\S+)");
-            Matcher selectCardWithNoSpace=Misc.getMatcher(in, "^Placing card number (?<n>\\S+)");
-            Matcher selectDuplicateCard=Misc.getMatcher(in, "^Placing card number (?<n>\\S+) to copy (?<i>\\S+)");
+            Matcher showCardInformation=Misc.getMatcher(in, "^select card number (?<n>\\S+) player (?<x>\\S+)");
+            Matcher selectCardWithSpace=Misc.getMatcher(in, "^placing card number (?<n>\\S+) in block (?<i>\\S+)");
+            Matcher selectCardWithNoSpace=Misc.getMatcher(in, "^placing card number (?<n>\\S+)");
+            Matcher selectDuplicateCard=Misc.getMatcher(in, "^placing card number (?<n>\\S+) to copy (?<i>\\S+)");
             if(showInformation.find())
             {
                 showGameInformation(Host,Guest);
@@ -229,7 +229,7 @@ public class Game {
             }
             else
             {
-                String c="There is noBlock";
+                String c="Wall";
                 while (c.length()<17)
                 {
                     c+=" ";
@@ -274,7 +274,7 @@ public class Game {
             }
             else
             {
-                String c="There is noBlock";
+                String c="Wall";
                 while (c.length()<17)
                 {
                     c+=" ";
