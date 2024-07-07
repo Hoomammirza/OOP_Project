@@ -45,25 +45,25 @@ public class ShopMenu {
             exit = Misc.getMatcher(in, "^exit(\\s*)$");
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
 
-            if (shownewcards.find()) {
-                shownewcards();
-            } else if (showallcards.find()) {
-                showallcards();
-            } else if (editCard.find()) {
-                editcard(editCard);
-            } else if (removecard.find()) {
-                removecard(removecard);
-            } else if (showallplayers.find()) {
-                showallusers();
-            } else if (showcurrrentmenu.find()) {
-                System.out.println("ProfileMenu");
-            } else if (back.find()) {
-                return 1;
-            } else if (exit.find()) {
-                return 0;
-            }else {
-                System.out.println("invalid command");
-            }
+//            if (shownewcards.find()) {
+//                shownewcards();
+//            } else if (showallcards.find()) {
+//                showallcards();
+//            } else if (editCard.find()) {
+//                editcard(editCard);
+//            } else if (removecard.find()) {
+//                removecard(removecard);
+//            } else if (showallplayers.find()) {
+//                showallusers();
+//            } else if (showcurrrentmenu.find()) {
+//                System.out.println("ProfileMenu");
+//            } else if (back.find()) {
+//                return 1;
+//            } else if (exit.find()) {
+//                return 0;
+//            }else {
+//                System.out.println("invalid command");
+//            }
         }
         return 0;
     }
@@ -86,6 +86,7 @@ public class ShopMenu {
         for (int i = 0; i < buycards.size(); i++) {
 
         }
+        return false;
     }
 
 }
