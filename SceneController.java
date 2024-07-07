@@ -31,6 +31,8 @@ public class SceneController {
                     n=Game.run();
                 case 7:
                     n=History.run();
+                case 8:
+                    n=AdminMenu.run();
             }
         }
     }

@@ -184,7 +184,7 @@ public class SQLhandler {
                 statement = con.createStatement();
                 rs = statement.executeQuery("select * from cards where Name = '" + name + "';");
                 if (rs.next()) {
-                    return new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1);
+                    return new Card(rs.getString("Name"),rs.getInt("DefenceAttack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1);
                 } else {
                     return null;
                 }
@@ -200,7 +200,7 @@ public class SQLhandler {
                 statement = con.createStatement();
                 rs = statement.executeQuery("select * from cards where Name = '" + name + "';");
                 if (rs.next()) {
-                    return new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),getCardlevel(user, name));
+                    return new Card(rs.getString("Name"),rs.getInt("DefenceAttack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),getCardlevel(user, name));
                 } else {
                     return null;
                 }
@@ -247,7 +247,7 @@ public class SQLhandler {
                 statement = con.createStatement();
                 rs = statement.executeQuery("select * from cards ;");
                 while (rs.next()) {
-                    cards.add(new Card(rs.getString("Name"),rs.getInt("Defence/Attack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1));
+                    cards.add(new Card(rs.getString("Name"),rs.getInt("DefenceAttack"),rs.getInt("Duration"),rs.getInt("Damage"),rs.getInt("Upcost"),rs.getInt("Minlevel"), rs.getString("feature"),rs.getString("Type"),1));
                 }
             }
         } catch (Exception e){System.out.println(e);}
@@ -367,7 +367,7 @@ public class SQLhandler {
     public static void addCard(String name,int defenceattack,int duration,int playerdamage,int upgradelevel,int upgradecost){
         try {
             if (isConnected) {
-                PreparedStatement statement = con.prepareStatement("insert into cards (Name,Defence/Attack,Damage,Duration,Upcost,Minlevel) values (?,?,?,?,?,?);");
+                PreparedStatement statement = con.prepareStatement("insert into cards (Name,DefenceAttack,Damage,Duration,Upcost,Minlevel) values (?,?,?,?,?,?);");
                 statement.setString(1,name);
                 statement.setInt(2,defenceattack);
                 statement.setInt(3,playerdamage);
@@ -377,6 +377,41 @@ public class SQLhandler {
                 statement.execute();
             }
         } catch (Exception e){System.out.println(e);}
+    }
+    public static void edditcard(String name,int defenceattack,int duration,int playerdamage,int upgradelevel,int upgradecost,String originalname){
+        try {
+            if (isConnected) {
+                PreparedStatement statement = con.prepareStatement("delete from cards where Name = ?;");
+                statement.setString(1,originalname);
+                statement.execute();
+                addCard(name, defenceattack, duration, playerdamage, upgradelevel, upgradecost);
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
+    public static void removeCard(String originalname){
+        try {
+            if (isConnected) {
+                PreparedStatement statement = con.prepareStatement("delete from cards where Name = ?;");
+                statement.setString(1,originalname);
+                statement.execute();
+            }
+        } catch (Exception e){System.out.println(e);}
+    }
+    public static ArrayList<User> getallusers(){
+        ResultSet rs;
+        Statement statement;
+
+        ArrayList<User> items = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from user where isAdmin = 0 order by Username asc");
+                while (rs.next()) {
+                    items.add(new User(rs.getString("Username"),rs.getString("Password"),rs.getString("Nickname"),rs.getString("Email"),rs.getString("SecurityQ"),rs.getString("SecurityQA"),rs.getBoolean("isAdmin"),rs.getInt("Level"),rs.getInt("Coins"),rs.getInt("XP")));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return items;
 
     }
 }

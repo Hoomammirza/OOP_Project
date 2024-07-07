@@ -30,8 +30,12 @@ public class signin {
             showcurrrentmenu = Misc.getMatcher(in, "^show current menu(\\s*)$");
 
             if (login.find()){
-                if (login(login))
-                    return 4;
+                if (login(login)) {
+                    if (!Users.LoginUser.isAdmin)
+                        return 4;
+                    else
+                        return 8;
+                }
             } else if (ForgotPassword.find()){
                 forgotpassword(ForgotPassword);
             }else if (showcurrrentmenu.find()) {
