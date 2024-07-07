@@ -11,6 +11,10 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
+    public static int preXPH;
+    public static int preCoinsH;
+    public static int preXPG;
+    public static int preCoinsG;
     static public User host1;
     static public User quest1;
     static public int round;
@@ -32,6 +36,10 @@ public class GameController {
     public void nextphase(){
     }
     public static void run(User host,User Guest) {
+        preCoinsH = host1.Coins;
+        preXPH = host1.Coins;
+        preCoinsG =  quest1.Coins;
+        preXPG =  quest1.Coins;
         round = 4;
         host1=host;
         quest1=Guest;
@@ -237,8 +245,10 @@ public class GameController {
     }
     public static void endGame(User host,User guest)
     {
+        boolean hostwin = false;
         if(host.hitpoint>0)
         {
+            hostwin = true;
             if(Game.wager)
             {
                 System.out.println("user "+host.Nickname+" win!!");
@@ -263,6 +273,7 @@ public class GameController {
         }
         else if(guest.hitpoint>0)
         {
+            hostwin = false;
             if(Game.wager)
             {
                 System.out.println("user "+guest.Nickname+" win!!");
@@ -289,6 +300,8 @@ public class GameController {
         int perviousXpGuest=guest.XP;
         int perviousLevelHost=host.Level;
         int perviousLevelGuest=guest.Level;
+        SQLhandler.setnewHistory(host.Username,guest.Username,hostwin,!hostwin,host.Level,guest.Level,host.Coins-preCoinsH,host.XP-preXPH,guest.Coins-preCoinsG,guest.XP-preXPG);
+        SQLhandler.setnewHistory(guest.Username,host.Username,!hostwin,hostwin,guest.Level,host.Level,guest.Coins-preCoinsG,guest.XP-preXPG,host.Coins-preCoinsH,host.XP-preXPH);
         host.Level=User.updateLevel(perviousLevelHost,perviousXpHost);
         guest.Level=User.updateLevel(perviousLevelGuest,perviousXpGuest);
         host.XP=User.updateXp(perviousLevelHost,perviousXpHost);
