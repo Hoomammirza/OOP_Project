@@ -1,3 +1,4 @@
+import Game.Game;
 import Misc.Misc;
 import UserManagement.User;
 import UserManagement.Users;
@@ -14,6 +15,7 @@ public class MainMenu {
         boolean quit = false;
 
         Matcher startGame;
+        Matcher startGamewager;
         Matcher showCard;
         Matcher HistoryGame;
         Matcher ProfileMenu;
@@ -22,7 +24,8 @@ public class MainMenu {
         Matcher showcurrentMenu;
 
         System.out.println("commands:\n" +
-                "* start game\n"+
+                "* start game normal\n"+
+                "* start game wager\n"+
                 "* show my cards:\n" +
                 "* show history game\n" +
                 "* show current menu\n" +
@@ -32,7 +35,8 @@ public class MainMenu {
 
         while (!quit){
             in = input.nextLine();
-            startGame = Misc.getMatcher(in,"start game");
+            startGame = Misc.getMatcher(in,"start game normal");
+            startGamewager = Misc.getMatcher(in,"start game wager");
             showCard = Misc.getMatcher(in,"show my cards:");
             HistoryGame = Misc.getMatcher(in, "show history game");
             ProfileMenu = Misc.getMatcher(in, "profile menu");
@@ -41,6 +45,10 @@ public class MainMenu {
             exitAccount=Misc.getMatcher(in,"exit account");
 
             if (startGame.find()){
+                Game.wager = false;
+                return 6;
+            }if (startGamewager.find()){
+                Game.wager = true;
                 return 6;
             }else if (showCard.find()){
                 printCard();
