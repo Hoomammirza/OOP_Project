@@ -118,7 +118,7 @@ public class Game {
             {
                 int n=Integer.parseInt(showCardInformation.group("n"));
                 String x=showCardInformation.group("x");
-                showInformationCard(Host,Guest,n,x);
+                showInformationCard(Host,Guest,n-1,x);
             }
             else if(selectCardWithSpace.find())
             {

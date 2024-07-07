@@ -252,7 +252,7 @@ public class CardsController {
     }
     public static boolean doActionNow(String name)
     {
-        if(Objects.equals(name,"Healing")||Objects.equals(name,"changeHole") || Objects.equals(name,"pairHole") ||Objects.equals(name,"cardRemover")|| Objects.equals(name,"reduceRound")||Objects.equals(name,"reducePowerOpponentCard")||Objects.equals(name,"duplicator")||Objects.equals(name,"hider")||Objects.equals(name,"randomBuff")||Objects.equals(name,"shield"))
+        if(Objects.equals(name,"healing")||Objects.equals(name,"changeHole") || Objects.equals(name,"pairHole") ||Objects.equals(name,"cardRemover")|| Objects.equals(name,"reduceRound")||Objects.equals(name,"reducePowerOpponentCard")||Objects.equals(name,"duplicator")||Objects.equals(name,"hider")||Objects.equals(name,"randomBuff")||Objects.equals(name,"shield"))
         {
             return true;
         }

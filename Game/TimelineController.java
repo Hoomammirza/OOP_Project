@@ -58,7 +58,7 @@ public  class TimelineController {
                         }
                         if (empty) {
                             host.timeline[i] = host.hand.get(n);
-                            host.timeline[i].upgrade(host);
+                            host.timeline[i].upgradeCharacter(host);
                             for (int j = i + 1; j < i + host.hand.get(n).Duration && empty; j++) {
                                 host.timeline[j] = new Card(host.timeline[i]);
                             }

@@ -6,6 +6,7 @@ import UserManagement.*;
 import UserManagement.User;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -38,33 +39,60 @@ public class GameController {
         quest1.maxHP=User.getMaxHp(quest1.Level);
         host1.hitpoint=host1.maxHP;
         quest1.hitpoint=quest1.maxHP;
-        while (!finish)
+        boolean whoStart=whoStart();
+        if(whoStart)
         {
-            host1.comeInHound=new ArrayList<ArrayList<String>>();
-            quest1.comeInHound=new ArrayList<ArrayList<String>>();
-            host1.hand=get5CardHand(host1);
-            quest1.hand=get5CardHand(quest1);
-            host1.timeline=new Card[21];
-            quest1.timeline=new Card[21];
-            emptyCell(host1,quest1);
-            while (round>0)
-            {
-                Game.timelineInputOutput(host1,quest1);
-                Game.timelineInputOutput(quest1,host1);
-                round--;
-                if(host1.hand.size()<6 || host1.become6CardInHand || host1.become6CardInHandOneTime)
-                {
-                    host1.become6CardInHandOneTime=false;
-                    getNewCardInHand(host1);
+            while (!finish) {
+                host1.comeInHound = new ArrayList<ArrayList<String>>();
+                quest1.comeInHound = new ArrayList<ArrayList<String>>();
+                host1.hand = get5CardHand(host1);
+                quest1.hand = get5CardHand(quest1);
+                host1.timeline = new Card[21];
+                quest1.timeline = new Card[21];
+                emptyCell(host1, quest1);
+                while (round > 0) {
+                    Game.timelineInputOutput(host1, quest1);
+                    Game.timelineInputOutput(quest1, host1);
+                    round--;
+                    if (host1.hand.size() < 6 || host1.become6CardInHand || host1.become6CardInHandOneTime) {
+                        host1.become6CardInHandOneTime = false;
+                        getNewCardInHand(host1);
+                    }
+                    if (quest1.hand.size() < 6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime) {
+                        getNewCardInHand(quest1);
+                        quest1.become6CardInHandOneTime = false;
+                    }
                 }
-                if(quest1.hand.size()<6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime)
-                {
-                    getNewCardInHand(quest1);
-                    quest1.become6CardInHandOneTime=false;
-                }
+                attackUser(host1,quest1);
+                endRound(host1,quest1);
             }
-            attackUser(host1,quest1);
-            endRound(host1,quest1);
+        }
+        else
+        {
+            while (!finish) {
+                host1.comeInHound = new ArrayList<ArrayList<String>>();
+                quest1.comeInHound = new ArrayList<ArrayList<String>>();
+                host1.hand = get5CardHand(host1);
+                quest1.hand = get5CardHand(quest1);
+                host1.timeline = new Card[21];
+                quest1.timeline = new Card[21];
+                emptyCell(host1, quest1);
+                while (round > 0) {
+                    Game.timelineInputOutput(quest1, host1);
+                    Game.timelineInputOutput(host1, quest1);
+                    round--;
+                    if (host1.hand.size() < 6 || host1.become6CardInHand || host1.become6CardInHandOneTime) {
+                        host1.become6CardInHandOneTime = false;
+                        getNewCardInHand(host1);
+                    }
+                    if (quest1.hand.size() < 6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime) {
+                        getNewCardInHand(quest1);
+                        quest1.become6CardInHandOneTime = false;
+                    }
+                }
+                attackUser(host1,quest1);
+                endRound(host1,quest1);
+            }
         }
         endGame(host1,quest1);
         SQLhandler.updateUser(host1);
@@ -147,12 +175,38 @@ public class GameController {
             TimelineController.reduceHitpoint(host,guest,i);
             int c=host.maxHP-host.hitpoint;
             System.out.println("user host: "+host.Nickname+"  damage:  "+c+"  HitPoint host:  "+host.hitpoint);
-            System.out.println("card host block["+a+"] name:  "+host.timeline[i].name+"  card damage:  "+host.timeline[i].playerDamage);
+            if(host.timeline[i]!=null)
+            {
+                if(!Objects.equals(host.timeline[i].name, "empty"))
+                {
+                System.out.println("card host block["+a+"] name:  "+host.timeline[i].name+"  card damage:  "+host.timeline[i].playerDamage);
+                }
+                else if(Objects.equals(host.timeline[i].name,"empty") && host.timeline[i].cardReference!=null)
+                {
+                    System.out.println("card host block["+a+"] name:  "+host.timeline[i].cardReference.name+"  card damage:  "+host.timeline[i].playerDamage);
+                }
+                else
+                {
+                    System.out.println("there is no block");
+                }
+                1
+            }
+            else
+            {
+                System.out.println("card host block["+a+"] name:  "+"empty"+"  card damage:  "+0);
+            }
             c=guest.maxHP-guest.hitpoint;
             System.out.println("user guest: "+guest.Nickname+"  damage:  "+c+"  HitPoint guest:  "+guest.hitpoint);
-            System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
-            host.hitpoint -= guest.timeline[i].playerDamage;
-            guest.hitpoint -= host.timeline[i].playerDamage;
+            if(guest.timeline[i]!=null)
+            {
+                System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
+
+            }
+            else
+            {
+                System.out.println("card guest block["+a+"] name:  "+"empty"+"  card damage:  "+0);
+
+            }
             if(host.hitpoint<=0 || guest.hitpoint<=0)
             {
                 finish=true;
@@ -167,6 +221,7 @@ public class GameController {
         guest.become4CardInHand=false;
         guest.become6CardInHandOneTime=false;
         guest.become6CardInHand=false;
+        round=4;
     }
     public static void endGame(User host,User guest)
     {
@@ -209,5 +264,15 @@ public class GameController {
         host.timeline[a]=new Card("empty",0,0,0,0,0,null,null,0);
         a=random.nextInt(21);
         Guest.timeline[a]=new Card("empty",0,0,0,0,0,null,null,0);
+    }
+    public static boolean whoStart()
+    {
+        Random random=new Random();
+        int a=random.nextInt(10);
+        if(a<=5)
+        {
+            return true;
+        }
+        return false;
     }
 }
