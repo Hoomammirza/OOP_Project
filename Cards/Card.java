@@ -61,6 +61,25 @@ public class Card {
         this.feature = feature;
         this.character = character;
         this.cardReference=null;
+        for(int i=0;i<level;i++)
+        {
+            if((this.defence_attack*1.2)<=100)
+            {
+                this.defence_attack=(int)(defence_attack*1.2);
+            }
+            else
+            {
+                this.defence_attack=100;
+            }
+            if((this.playerDamage*1.05)<=50)
+            {
+                this.playerDamage=(int)(defence_attack*1.05);
+            }
+            else
+            {
+                this.defence_attack=50;
+            }
+        }
     }
 
     public Card(Card card)
