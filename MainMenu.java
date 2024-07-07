@@ -36,24 +36,19 @@ public class MainMenu {
             showCard = Misc.getMatcher(in,"show my cards:");
             HistoryGame = Misc.getMatcher(in, "show history game");
             ProfileMenu = Misc.getMatcher(in, "profile menu");
-            shopMenu=Misc.getMatcher(in,"show current menu");
-            showcurrentMenu=Misc.getMatcher(in,"shop menu");
+            showcurrentMenu=Misc.getMatcher(in,"show current menu");
+            shopMenu=Misc.getMatcher(in,"shop menu");
             exitAccount=Misc.getMatcher(in,"exit account");
+
             if (startGame.find()){
                 return 6;
-            }
-            else if (showCard.find()){
+            }else if (showCard.find()){
                 printCard();
-            }
-            else if (exitAccount.find()) {
+            }else if (exitAccount.find()) {
                 return 1;
-            }
-            else if(showcurrentMenu.find())
-            {
+            }else if(showcurrentMenu.find()) {
                 System.out.println("Main Menu");
-            }
-            else if(ProfileMenu.find())
-            {
+            }else if(ProfileMenu.find()) {
                 return 5;
             }else if (HistoryGame.find()){
                 return 7;

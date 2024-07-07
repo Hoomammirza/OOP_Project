@@ -12,7 +12,7 @@ public class SQLhandler {
             if (isConnected)
                 throw new Exception("AlreadyConnected");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","1234");
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/test","root","honor1384");
             isConnected = true;
         } catch (Exception e){System.out.println(e);}
     }
@@ -263,6 +263,22 @@ public class SQLhandler {
                 rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
                 while (rs.next()) {
                     cards.add(getCard(user,rs.getString("Name")));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }public static ArrayList<Card> getUsercardsupgradable(User user){
+        ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from usercard where Username = '"+user.Username+"';");
+                while (rs.next()) {
+                    Card card = getCard(user,rs.getString("Name"));
+                    if (card.upgradeLevel <= user.Level && card.feature == null)
+                        cards.add(card);
                 }
             }
         } catch (Exception e){System.out.println(e);}

@@ -29,10 +29,15 @@ public class SceneController {
                     break;
                 case 6:
                     n=Game.run();
+                    break;
                 case 7:
                     n=History.run();
+                    break;
                 case 8:
                     n=AdminMenu.run();
+                    break;
+                case 9:
+                    n=ShopMenu.run();
             }
         }
     }
