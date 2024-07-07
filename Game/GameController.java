@@ -44,6 +44,9 @@ public class GameController {
             quest1.comeInHound=new ArrayList<ArrayList<String>>();
             host1.hand=get5CardHand(host1);
             quest1.hand=get5CardHand(quest1);
+            host1.timeline=new Card[21];
+            quest1.timeline=new Card[21];
+            emptyCell(host1,quest1);
             while (round>0)
             {
                 Game.timelineInputOutput(host1,quest1);
@@ -141,7 +144,7 @@ public class GameController {
         for (int i=0;i<21 && !finish;i++)
         {
             int a=i+1;
-            TimelineController.cardVsCard(host,guest,i);
+            TimelineController.reduceHitpoint(host,guest,i);
             int c=host.maxHP-host.hitpoint;
             System.out.println("user host: "+host.Nickname+"  damage:  "+c+"  HitPoint host:  "+host.hitpoint);
             System.out.println("card host block["+a+"] name:  "+host.timeline[i].name+"  card damage:  "+host.timeline[i].playerDamage);
@@ -198,5 +201,13 @@ public class GameController {
         host.XP=User.updateXp(perviousLevelHost,perviousXpHost);
         guest.XP=User.updateXp(perviousLevelGuest,perviousXpGuest);
         finish=false;
+    }
+    public static void emptyCell(User host,User Guest)
+    {
+        Random random=new Random();
+        int a=random.nextInt(21);
+        host.timeline[a]=new Card("empty",0,0,0,0,0,null,null,0);
+        a=random.nextInt(21);
+        Guest.timeline[a]=new Card("empty",0,0,0,0,0,null,null,0);
     }
 }

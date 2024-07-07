@@ -48,7 +48,14 @@ public class Card {
         this.name = name;
         this.defence_attack = defence_attack;
         this.Duration = Duration;
-        this.playerDamage = playerDamage / Duration;
+        if(Duration!=0)
+        {
+            this.playerDamage = playerDamage / Duration;
+        }
+        else
+        {
+            this.playerDamage=0;
+        }
         this.upgradeLevel = upgradeLevel;
         this.upgradeCost = upgradeCost;
         this.feature = feature;

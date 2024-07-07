@@ -33,8 +33,14 @@ public  class TimelineController {
     }
     public static void reduceHitpoint(User Host,User Guest,int i)
     {
-        Host.hitpoint-=Host.timeline[i].playerDamage;
-        Guest.hitpoint-=Guest.timeline[i].playerDamage;
+        if(Guest.timeline[i]!=null)
+        {
+            Host.hitpoint-=Guest.timeline[i].playerDamage;
+        }
+        if(Host.timeline[i]!=null)
+        {
+            Guest.hitpoint-=Host.timeline[i].playerDamage;
+        }
     }
     public static boolean setCardInGameWithSpace(User host,User Guest,int n,int i)
     {

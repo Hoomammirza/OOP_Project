@@ -106,10 +106,10 @@ public class Game {
                     +"-Placing card number <n> in block <i>");
             in=input.nextLine();
             Matcher showInformation=Misc.getMatcher(in, "show game information");
-            Matcher showCardInformation=Misc.getMatcher(in, "^select card number (?<n>\\S+) player (?<x>\\S+)");
-            Matcher selectCardWithSpace=Misc.getMatcher(in, "^select card number (?<n>\\S+) in block (?<i>\\S+)");
-            Matcher selectCardWithNoSpace=Misc.getMatcher(in, "^select card number (?<n>\\S+)");
-            Matcher selectDuplicateCard=Misc.getMatcher(in, "^select card number (?<n>\\S+) to copy (?<i>\\S+)");
+            Matcher showCardInformation=Misc.getMatcher(in, "^Select card number (?<n>\\S+) player (?<x>\\S+)");
+            Matcher selectCardWithSpace=Misc.getMatcher(in, "^Placing card number (?<n>\\S+) in block (?<i>\\S+)");
+            Matcher selectCardWithNoSpace=Misc.getMatcher(in, "^Placing card number (?<n>\\S+)");
+            Matcher selectDuplicateCard=Misc.getMatcher(in, "^Placing card number (?<n>\\S+) to copy (?<i>\\S+)");
             if(showInformation.find())
             {
                 showGameInformation(Host,Guest);
