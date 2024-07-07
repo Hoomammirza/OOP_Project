@@ -62,6 +62,7 @@ public class GameController {
                         getNewCardInHand(quest1);
                         quest1.become6CardInHandOneTime = false;
                     }
+
                 }
                 attackUser(host1,quest1);
                 endRound(host1,quest1);
@@ -187,9 +188,9 @@ public class GameController {
                 }
                 else
                 {
-                    System.out.println("there is no block");
+                    System.out.println("Wall");
                 }
-                1
+
             }
             else
             {
@@ -199,7 +200,18 @@ public class GameController {
             System.out.println("user guest: "+guest.Nickname+"  damage:  "+c+"  HitPoint guest:  "+guest.hitpoint);
             if(guest.timeline[i]!=null)
             {
-                System.out.println("card guest block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
+                if(!Objects.equals(guest.timeline[i].name, "empty"))
+                {
+                    System.out.println("card host block["+a+"] name:  "+guest.timeline[i].name+"  card damage:  "+guest.timeline[i].playerDamage);
+                }
+                else if(Objects.equals(guest.timeline[i].name,"empty") && guest.timeline[i].cardReference!=null)
+                {
+                    System.out.println("card host block["+a+"] name:  "+guest.timeline[i].cardReference.name+"  card damage:  "+guest.timeline[i].playerDamage);
+                }
+                else
+                {
+                    System.out.println("Wall");
+                }
 
             }
             else

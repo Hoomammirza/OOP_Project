@@ -143,7 +143,7 @@ public  class TimelineController {
     {
         if(Guest.timeline[i]!=null)
         {
-            if(host.timeline[i].Duration>1 && host.timeline[i].Duration>= Guest.timeline[i].Duration && !Objects.equals(Guest.timeline[i].name, "empty"))
+            if(Guest.timeline[i].Duration>1 && host.timeline[i].Duration>= Guest.timeline[i].Duration && !Objects.equals(Guest.timeline[i].name, "empty"))
             {
                 if(host.timeline[i].defence_attack>Guest.timeline[i].defence_attack)
                 {

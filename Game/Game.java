@@ -195,92 +195,98 @@ public class Game {
             }
             System.out.println(c);
         }
-        for(int i=0;i<21;i++)
+        if(host.visibleCard)
         {
-            if(host.timeline[i]==null)
+            for(int i=0;i<21;i++)
             {
-                String c="empty";
-                while (c.length()<17)
+                if(host.timeline[i]==null)
                 {
-                    c+=" ";
-                    c.length();
+                    String c="empty";
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    a+=c;
                 }
-                a+=c;
-            }
-            else if(!Objects.equals(host.timeline[i].name, "empty"))
-            {
-                String c=host.timeline[i].name;
-                while (c.length()<17)
+                else if(!Objects.equals(host.timeline[i].name, "empty"))
                 {
-                    c+=" ";
-                    c.length();
+                    String c=host.timeline[i].name;
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    a+=c;
                 }
-                a+=c;
-            }
-            else if(Objects.equals(host.timeline[i].name,"empty")&& host.timeline[i].cardReference!=null)
-            {
-                String c=host.timeline[i].cardReference.name;
-                while (c.length()<17)
+                else if(Objects.equals(host.timeline[i].name,"empty")&& host.timeline[i].cardReference!=null)
                 {
-                    c+=" ";
-                    c.length();
+                    String c=host.timeline[i].cardReference.name;
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    a+=c;
                 }
-                a+=c;
-            }
-            else
-            {
-                String c="Wall";
-                while (c.length()<17)
+                else
                 {
-                    c+=" ";
-                    c.length();
+                    String c="Wall";
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    a+=c;
                 }
-                a+=c;
             }
         }
         int z=host.maxHP-host.hitpoint;
         System.out.println(host.Nickname+"  damage:  "+z+"  hit point:  "+host.hitpoint+"  character:  "+host.character);
-        for(int i=0;i<21;i++)
+        if(host.visibleCard)
         {
-            if(guest.timeline[i]==null)
+            for(int i=0;i<21;i++)
             {
-                String c="empty";
-                while (c.length()<17)
+                if(guest.timeline[i]==null)
                 {
-                    c+=" ";
-                    c.length();
+                    String c="empty";
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    b+=c;
                 }
-                b+=c;
-            }
-            else if(!Objects.equals(guest.timeline[i].name, "empty"))
-            {
-                String c=guest.timeline[i].name;
-                while (c.length()<17)
+                else if(!Objects.equals(guest.timeline[i].name, "empty"))
                 {
-                    c+=" ";
-                    c.length();
+                    String c=guest.timeline[i].name;
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    b+=c;
                 }
-                b+=c;
-            }
-            else if(Objects.equals(guest.timeline[i].name,"empty")&& guest.timeline[i].cardReference!=null)
-            {
-                String c=guest.timeline[i].cardReference.name;
-                while (c.length()<17)
+                else if(Objects.equals(guest.timeline[i].name,"empty")&& guest.timeline[i].cardReference!=null)
                 {
-                    c+=" ";
-                    c.length();
+                    String c=guest.timeline[i].cardReference.name;
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    b+=c;
                 }
-                b+=c;
-            }
-            else
-            {
-                String c="Wall";
-                while (c.length()<17)
+                else
                 {
-                    c+=" ";
-                    c.length();
+                    String c="Wall";
+                    while (c.length()<17)
+                    {
+                        c+=" ";
+                        c.length();
+                    }
+                    b+=c;
                 }
-                b+=c;
             }
         }
         System.out.println(a);
