@@ -302,6 +302,21 @@ public class SQLhandler {
         } catch (Exception e){System.out.println(e);}
         return cards;
     }
+    public static ArrayList<Card> getCardsnormal(){
+        ResultSet rs;
+        Statement statement;
+        ArrayList<Card> cards = new ArrayList<>();
+        try {
+            if (isConnected) {
+                statement = con.createStatement();
+                rs = statement.executeQuery("select * from cards where feature is null ;");
+                while (rs.next()) {
+                    cards.add(getCard(rs.getString("Name")));
+                }
+            }
+        } catch (Exception e){System.out.println(e);}
+        return cards;
+    }
     public static int updateCard(User user,  String name, int level){
         Statement statement;
         try {
@@ -348,5 +363,20 @@ public class SQLhandler {
                 statement.execute();
             }
         } catch (Exception e){System.out.println(e);}
+    }
+    public static void addCard(String name,int defenceattack,int duration,int playerdamage,int upgradelevel,int upgradecost){
+        try {
+            if (isConnected) {
+                PreparedStatement statement = con.prepareStatement("insert into cards (Name,Defence/Attack,Damage,Duration,Upcost,Minlevel) values (?,?,?,?,?,?);");
+                statement.setString(1,name);
+                statement.setInt(2,defenceattack);
+                statement.setInt(3,playerdamage);
+                statement.setInt(4,duration);
+                statement.setInt(5,upgradecost);
+                statement.setInt(6,upgradelevel);
+                statement.execute();
+            }
+        } catch (Exception e){System.out.println(e);}
+
     }
 }
