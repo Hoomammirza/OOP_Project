@@ -239,25 +239,51 @@ public class GameController {
     {
         if(host.hitpoint>0)
         {
-            System.out.println("user "+host.Nickname+" win!!");
-            System.out.println("user"+host.Nickname+" get 50 coin");
-            host.Coins+=50;
-            System.out.println("user"+host.Nickname+" experience increase 60 ");
-            host.XP+=60;
-            System.out.println("user "+guest.Nickname+" lose!!");
-            System.out.println("user"+guest.Nickname+" experience increase 5 ");
-            guest.XP+=5;
+            if(Game.wager)
+            {
+                System.out.println("user "+host.Nickname+" win!!");
+                System.out.println("user "+host.Nickname+" get "+Game.wagerint+" coin");
+                System.out.println("user "+guest.Nickname+" lose!!");
+                int a=-Game.wagerint;
+                System.out.println("user "+guest.Nickname+"get "+a+" coin");
+                host.Coins+=Game.wagerint;
+                guest.Coins-=Game.wagerint;
+            }
+            else
+            {
+                System.out.println("user "+host.Nickname+" win!!");
+                System.out.println("user"+host.Nickname+" get 50 coin");
+                host.Coins+=50;
+                System.out.println("user"+host.Nickname+" experience increase 60 ");
+                host.XP+=60;
+                System.out.println("user "+guest.Nickname+" lose!!");
+                System.out.println("user"+guest.Nickname+" experience increase 5 ");
+                guest.XP+=5;
+            }
         }
         else if(guest.hitpoint>0)
         {
-            System.out.println("user "+guest.Nickname+" win!!");
-            System.out.println("user"+guest.Nickname+" get 50 coin");
-            guest.Coins+=50;
-            System.out.println("user"+guest.Nickname+" experience increase 60 ");
-            guest.XP+=60;
-            System.out.println("user "+host.Nickname+" lose!!");
-            System.out.println("user"+host.Nickname+" experience increase 5 ");
-            host.XP+=5;
+            if(Game.wager)
+            {
+                System.out.println("user "+guest.Nickname+" win!!");
+                System.out.println("user "+guest.Nickname+" get "+Game.wagerint+" coin");
+                System.out.println("user "+host.Nickname+" lose!!");
+                int a=-Game.wagerint;
+                System.out.println("user "+host.Nickname+"get "+a+" coin");
+                guest.Coins+=Game.wagerint;
+                host.Coins-=Game.wagerint;
+            }
+            else
+            {
+                System.out.println("user "+guest.Nickname+" win!!");
+                System.out.println("user"+guest.Nickname+" get 50 coin");
+                guest.Coins+=50;
+                System.out.println("user"+guest.Nickname+" experience increase 60 ");
+                guest.XP+=60;
+                System.out.println("user "+host.Nickname+" lose!!");
+                System.out.println("user"+host.Nickname+" experience increase 5 ");
+                host.XP+=5;
+            }
         }
         int perviousXpHost=host.XP;
         int perviousXpGuest=guest.XP;
