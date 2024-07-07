@@ -15,11 +15,11 @@ public class Game {
     public static int run() {
         initGuest();
         if (wager)
-            wagerint = pickwager();
+            pickwager();
         GameController.run(Host,Guest);
         return 4;
     }
-    public static int pickwager(){
+    public static void pickwager(){
         System.out.println("Please select you wager Player 1:");
         boolean quit = false;
         Matcher selectwager;
@@ -44,6 +44,7 @@ public class Game {
     public static boolean selectwager(Matcher matcher){
         int wager = Integer.parseInt(matcher.group("wager"));
         if (wager >= Host.Coins && Guest.Coins<= wager){
+            wagerint = wager;
             return true;
         }else {
             System.out.println("wager too high!");
