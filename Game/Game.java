@@ -43,7 +43,7 @@ public class Game {
     }
     public static boolean selectwager(Matcher matcher){
         int wager = Integer.parseInt(matcher.group("wager"));
-        if (wager >= Host.Coins && Guest.Coins<= wager){
+        if (wager <= Host.Coins && Guest.Coins<= wager){
             wagerint = wager;
             return true;
         }else {
