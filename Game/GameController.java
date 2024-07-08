@@ -38,15 +38,15 @@ public class GameController {
     public static void run(User host,User Guest) {
         host1=host;
         quest1=Guest;
-        preCoinsH = host1.Coins;
-        preXPH = host1.Coins;
-        preCoinsG =  quest1.Coins;
-        preXPG =  quest1.Coins;
         round = 4;
         host1.maxHP=User.getMaxHp(host1.Level);
         quest1.maxHP=User.getMaxHp(quest1.Level);
         host1.hitpoint=host1.maxHP;
         quest1.hitpoint=quest1.maxHP;
+        preCoinsH = host1.XP;
+        preXPH = host1.Coins;
+        preCoinsG =  quest1.Coins;
+        preXPG =  quest1.XP;
         boolean whoStart=whoStart();
         if(whoStart)
         {
