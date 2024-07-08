@@ -36,13 +36,13 @@ public class GameController {
     public void nextphase(){
     }
     public static void run(User host,User Guest) {
+        host1=host;
+        quest1=Guest;
         preCoinsH = host1.Coins;
         preXPH = host1.Coins;
         preCoinsG =  quest1.Coins;
         preXPG =  quest1.Coins;
         round = 4;
-        host1=host;
-        quest1=Guest;
         host1.maxHP=User.getMaxHp(host1.Level);
         quest1.maxHP=User.getMaxHp(quest1.Level);
         host1.hitpoint=host1.maxHP;

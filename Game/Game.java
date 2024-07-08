@@ -232,7 +232,8 @@ public class Game {
             {
                 c+="damage/healing card  ";
                 c+="Duration:  "+host.hand.get(i).Duration+"  ";
-                c+="player Damage:  "+host.hand.get(i).playerDamage+"  ";
+                int l=host.hand.get(i).playerDamage*host.hand.get(i).Duration;
+                c+="player Damage:  "+l+"  ";
                 c+="attack defence point:  "+host.hand.get(i).defence_attack;
             }
             System.out.println(c);
@@ -344,8 +345,9 @@ public class Game {
             else
             {
                 c+="damage/healing card  ";
+                int l=guest.hand.get(i).playerDamage*guest.hand.get(i).Duration;
                 c+="Duration:  "+guest.hand.get(i).Duration+"  ";
-                c+="player Damage:  "+guest.hand.get(i).playerDamage+"  ";
+                c+="player Damage:  "+l+"  ";
                 c+="attack defence point:  "+guest.hand.get(i).defence_attack;
             }
             System.out.println(c);
@@ -371,7 +373,8 @@ public class Game {
                 {
                     c+="damage/healing card  ";
                     c+="Duration:  "+host.hand.get(n).Duration+"  ";
-                    c+="player Damage:  "+host.hand.get(n).playerDamage+"  ";
+                    int l=host.hand.get(n).playerDamage*host.hand.get(n).Duration;
+                    c+="player Damage:  "+l+"  ";
                     c+="attack defence point:  "+host.hand.get(n).defence_attack;
                 }
                 System.out.println(c);
@@ -393,9 +396,10 @@ public class Game {
                 }
                 else
                 {
+                    int l=guest.hand.get(n).playerDamage*guest.hand.get(n).Duration;
                     c+="damage/healing card  ";
                     c+="Duration:  "+guest.hand.get(n).Duration+"  ";
-                    c+="player Damage:  "+guest.hand.get(n).playerDamage+"  ";
+                    c+="player Damage:  "+l+"  ";
                     c+="attack defence point:  "+guest.hand.get(n).defence_attack;
                 }
                 System.out.println(c);

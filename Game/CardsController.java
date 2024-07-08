@@ -187,7 +187,7 @@ public class CardsController {
             {
                 if(guest.timeline[j]!=null)
                 {
-                    if(!Objects.equals(guest.timeline[j].name, "null"))
+                    if(!Objects.equals(guest.timeline[j].name, "empty"))
                     {
                         duration.get(guest.timeline[j].Duration).add(j);
                     }
@@ -195,7 +195,14 @@ public class CardsController {
             }
             Random random=new Random();
             int a=random.nextInt(5);
-            boolean change=false;
+            boolean change=true;
+            for (int i=0;i<duration.size();i++)
+            {
+                if(duration.get(i).size()>=2)
+                {
+                    change=false;
+                }
+            }
             while (!change)
             {
                 if(duration.get(a).size()>=2)
