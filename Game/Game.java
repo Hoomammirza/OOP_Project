@@ -172,19 +172,19 @@ public class Game {
                 }
 
             }
-            else if(selectCardWithNoSpace.find())
-            {
-                int n=Integer.parseInt(selectCardWithNoSpace.group("n"));
-                if(TimelineController.setCardInGameWithNoSpace(Host,Guest,n-1))
-                {
-                    exit=true;
-                }
-            }
             else if(selectDuplicateCard.find())
             {
                 int n=Integer.parseInt(selectDuplicateCard.group("n"));
                 int i=Integer.parseInt(selectDuplicateCard.group("i"));
                 if(TimelineController.SetDuplicator(Host,Guest,n-1,i-1))
+                {
+                    exit=true;
+                }
+            }
+            else if(selectCardWithNoSpace.find())
+            {
+                int n=Integer.parseInt(selectCardWithNoSpace.group("n"));
+                if(TimelineController.setCardInGameWithNoSpace(Host,Guest,n-1))
                 {
                     exit=true;
                 }

@@ -140,45 +140,62 @@ public class CardsController {
             Random random=new Random();
             int a=random.nextInt(21);
             Boolean empty=true;
-            while (empty)
+            int z=0;
+            for (int i=0;i<21;i++)
             {
-                if(guest.timeline[a]!=null)
+                if(guest.timeline[i]!=null)
                 {
-                    if(!Objects.equals(guest.timeline[a].name, "empty"))
+                    if(!Objects.equals(guest.timeline[i].name,"empty"))
                     {
-                        for(int j=0;j<guest.timeline[a].Duration;j++)
-                        {
-                            guest.timeline[a+j].playerDamage=(int) (guest.timeline[a+j].playerDamage*0.6);
-                            empty=false;
-                        }
+                        z++;
                     }
                 }
-                if(empty)
-                {
-                    a=random.nextInt(21);
-                }
             }
-            empty=true;
-            int b=random.nextInt(21);
-            while (empty)
+            if(z>0)
             {
-                if(a!=b)
+                while (empty)
                 {
-                    if(guest.timeline[b]!=null)
+                    if(guest.timeline[a]!=null)
                     {
-                        if(!Objects.equals(guest.timeline[b].name, "empty"))
+                        if(!Objects.equals(guest.timeline[a].name, "empty"))
                         {
-                            for (int j=0;j<guest.timeline[b].Duration;j++)
+                            for(int j=0;j<guest.timeline[a].Duration;j++)
                             {
-                                guest.timeline[b+j].defence_attack=(int) (guest.timeline[b+j].defence_attack*0.6);
+                                guest.timeline[a+j].playerDamage=(int) (guest.timeline[a+j].playerDamage*0.6);
                                 empty=false;
                             }
                         }
                     }
+                    if(empty)
+                    {
+                        a=random.nextInt(21);
+                    }
                 }
-                if(empty)
+                empty=true;
+                int b=random.nextInt(21);
+                if(z>1)
                 {
-                    b=random.nextInt(21);
+                    while (empty)
+                    {
+                        if(a!=b)
+                        {
+                            if(guest.timeline[b]!=null)
+                            {
+                                if(!Objects.equals(guest.timeline[b].name, "empty"))
+                                {
+                                    for (int j=0;j<guest.timeline[b].Duration;j++)
+                                    {
+                                        guest.timeline[b+j].defence_attack=(int) (guest.timeline[b+j].defence_attack*0.6);
+                                        empty=false;
+                                    }
+                                }
+                            }
+                        }
+                        if(empty)
+                        {
+                            b=random.nextInt(21);
+                        }
+                    }
                 }
             }
         }

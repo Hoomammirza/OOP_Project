@@ -22,7 +22,6 @@ public  class TimelineController {
         {
            CardsController.featureShield(Host.timeline[i].feature,Guest,i);
         }
-
     }
     public static void doCard(User Host,User Guest,int n,String feature)
     {
