@@ -100,7 +100,7 @@ public class Card {
         else
         {
             this.Duration=0;
-            this.defence_attack=card.defence_attack;
+            this.defence_attack=0;
             this.playerDamage=0;
             this.upgradeCost=0;
             this.level=0;
