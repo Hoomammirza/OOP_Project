@@ -70,10 +70,11 @@ public class MainMenu {
     {
         for (int i=0;i<Users.LoginUser.cards.size();i++)
         {
+            int a=Users.LoginUser.cards.get(i).playerDamage*Users.LoginUser.cards.get(i).Duration;
             System.out.println("name:  "+Users.LoginUser.cards.get(i).name+"\n"
                     +"duration: "+Users.LoginUser.cards.get(i).Duration+"\n"+
                     "card attack/defences:  "+Users.LoginUser.cards.get(i).defence_attack+"\n"+
-                    "player damage:  "+Users.LoginUser.cards.get(i).playerDamage+"\n"+
+                    "player damage:  "+a+"\n"+
                     "level:  "+Users.LoginUser.cards.get(i).level);
         }
     }

@@ -34,7 +34,7 @@ public class Card {
             }
             if((this.playerDamage*1.05)<=50)
             {
-                this.playerDamage=(int)(defence_attack*1.05);
+                this.playerDamage=(int)(playerDamage*1.05);
             }
             else
             {
@@ -61,7 +61,7 @@ public class Card {
         this.feature = feature;
         this.character = character;
         this.cardReference=null;
-        for(int i=0;i<level;i++)
+        for(int i=0;i<level-1;i++)
         {
             this.upgradeCost=1.25*this.upgradeCost;
             if((this.defence_attack*1.2)<=100)
@@ -74,7 +74,7 @@ public class Card {
             }
             if((this.playerDamage*1.05)<=50)
             {
-                this.playerDamage=(int)(defence_attack*1.05);
+                this.playerDamage=(int)(playerDamage*1.05);
             }
             else
             {
