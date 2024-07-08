@@ -90,11 +90,11 @@ public class GameController {
                     Game.timelineInputOutput(quest1, host1);
                     Game.timelineInputOutput(host1, quest1);
                     round--;
-                    if (host1.hand.size() < 6 || host1.become6CardInHand || host1.become6CardInHandOneTime) {
+                    if (host1.hand.size() < 5 || host1.become6CardInHand || host1.become6CardInHandOneTime) {
                         host1.become6CardInHandOneTime = false;
                         getNewCardInHand(host1);
                     }
-                    if (quest1.hand.size() < 6 || quest1.become6CardInHand || quest1.become6CardInHandOneTime) {
+                    if (quest1.hand.size() < 5 || quest1.become6CardInHand || quest1.become6CardInHandOneTime) {
                         getNewCardInHand(quest1);
                         quest1.become6CardInHandOneTime = false;
                     }
@@ -122,7 +122,7 @@ public class GameController {
         {
             user.comeInHound.add(new ArrayList<String>());
             user.comeInHound.getLast().add(special.get(i).name);
-            user.comeInHound.getLast().add("1");
+            user.comeInHound.getLast().add("0");
         }
         int n=0;
         Random random=new Random();

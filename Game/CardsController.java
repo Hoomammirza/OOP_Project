@@ -12,13 +12,20 @@ public class CardsController {
     {
         if(Objects.equals(feature,"healing"))
         {
-            guest.hitpoint+=20;
+            host.hitpoint+=20;
         }
         else if(Objects.equals(feature,"randomBuff"))
         {
             Random random=new Random();
             int a=random.nextInt(21);
-            boolean empty=true;
+            boolean empty=false;
+            for (int i=0;i<21;i++)
+            {
+                if(host.timeline[i]!=null && !Objects.equals(host.timeline[a].name, "empty"))
+                {
+                    empty=true;
+                }
+            }
             while (empty)
             {
                 if(host.timeline[a]!=null)
@@ -76,7 +83,7 @@ public class CardsController {
                 {
                     if(guest.timeline[j]!=null)
                     {
-                        if(Objects.equals(guest.timeline[j].name, "empty") && host.timeline[j].cardReference==null)
+                        if(Objects.equals(guest.timeline[j].name, "empty") && guest.timeline[j].cardReference==null)
                         {
                             guest.timeline[j]=null;
                             empty=true;
@@ -102,7 +109,7 @@ public class CardsController {
             {
                 if(host.timeline[j]!=null)
                 {
-                    if(Objects.equals(host.timeline[j].name, "empty"))
+                    if(Objects.equals(host.timeline[j].name, "empty") && host.timeline[j].cardReference==null)
                     {
                         host.timeline[j]=null;
                         empty=true;
@@ -117,8 +124,9 @@ public class CardsController {
         else if(Objects.equals(feature,"removeCardFromHand"))
         {
             Random random=new Random();
-            int a=random.nextInt(5);
+            int a=random.nextInt(guest.hand.size());
             Card card=guest.hand.get(a);
+            guest.hand.remove(a);
             guest.become4CardInHand=true;
             if(host.hand.size()<6)
             {
@@ -246,7 +254,10 @@ public class CardsController {
     {
         if(Objects.equals(feature, "shield"))
         {
-            guest.timeline[i].playerDamage=0;
+            if(guest.timeline[i]!=null)
+            {
+                guest.timeline[i].playerDamage=0;
+            }
         }
     }
     public static void featureDuplicator(User host,String feature,int n)

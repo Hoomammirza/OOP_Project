@@ -87,13 +87,25 @@ public class Card {
     {
         this.name="empty";
         this.cardReference=card;
-        this.feature=card.feature;
-        this.Duration=card.Duration;
-        this.defence_attack=card.defence_attack;
-        this.playerDamage=card.playerDamage;
-        this.upgradeCost=card.upgradeLevel;
-        this.level=card.level;
-        this.character=card.character;
+        if(card!=null)
+        {
+            this.feature=card.feature;
+            this.Duration=card.Duration;
+            this.defence_attack=card.defence_attack;
+            this.playerDamage=card.playerDamage;
+            this.upgradeCost=card.upgradeLevel;
+            this.level=card.level;
+            this.character=card.character;
+        }
+        else
+        {
+            this.Duration=0;
+            this.defence_attack=card.defence_attack;
+            this.playerDamage=0;
+            this.upgradeCost=0;
+            this.level=0;
+            this.character=null;
+        }
     }
     public Card(Card card,Boolean a)
     {
